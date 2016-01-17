@@ -1,0 +1,5 @@
+---
+- name: Copy iptables.rules
+  copy: src=roles/iptables/templates/iptables.rules dest=/etc/iptables.rules
+  notify:
+    - Reload iptables

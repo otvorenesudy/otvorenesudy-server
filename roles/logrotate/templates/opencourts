@@ -1,0 +1,19 @@
+/home/deploy/projects/opencourts_production/shared/log/*.log {
+                                    daily
+                                    missingok
+                                    rotate 5
+                                    compress
+                                    delaycompress
+                                    notifempty
+                                    copytruncate
+}
+
+/home/deploy/projects/opencourts-api-production/shared/log/*.log {
+                                    daily
+                                    missingok
+                                    rotate 5
+                                    compress
+                                    delaycompress
+                                    notifempty
+                                    copytruncate
+}

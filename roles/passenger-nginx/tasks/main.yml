@@ -1,0 +1,42 @@
+---
+- name: Add key for Passenger
+  apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7 state=present
+
+- name: Use apt via HTTPS
+  apt: name={{ item }} state=present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+
+- name: Add Passenger's apt repositories
+  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ansible_distribution_release}} main' state=present update_cache=yes
+
+- name: Install Nginx
+  apt: name={{ item }} state=present force=yes
+  with_items:
+   - nginx-full
+   - passenger
+
+- name: Copy Nginx's configuration
+  copy: src=roles/passenger-nginx/templates/nginx.conf dest=/etc/nginx/nginx.conf
+  notify:
+    - Restart Nginx
+
+- name: Copy default page
+  copy: src=roles/passenger-nginx/templates/default dest=/etc/nginx/sites-available/default
+
+- name: Enable default page
+  file: src=/etc/nginx/sites-available/default dest=/etc/nginx/sites-enabled/default state=link
+
+- name: Copy default html page
+  copy: src=roles/passenger-nginx/templates/index.html dest=/etc/nginx/index.html
+  notify:
+    - Restart Nginx
+
+- name: Create application configuration
+  template: src=roles/passenger-nginx/templates/opencourts-api-production.conf.j2 dest=/etc/nginx/sites-available/opencourts-api-production
+
+- name: Enable application configuration
+  file: src=/etc/nginx/sites-available/opencourts-api-production dest=/etc/nginx/sites-enabled/opencourts-api-production state=link
+  notify:
+    - Restart Nginx

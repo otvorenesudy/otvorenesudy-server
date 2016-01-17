@@ -1,0 +1,22 @@
+- hosts: web
+  sudo: true
+  vars:
+    user: deploy
+    sysctl:
+      kernel:
+        # Webserver
+        shmmax: 6300102656 # 6GB of 12GB RAM in total
+        shmall: 1538111
+
+        # Vagrant, uncomment for testing purposes
+        # shmmax: 1050267648 # 1GB
+        # shmall: 256413
+  roles:
+    - { role: user, github_ssh_keys: [smolnar, pavolzbell] }
+    - sysctl
+    - iptables
+    - logrotate
+    - { role: ruby, rubies: [2.3.0] }
+    - { role: postgresql, version: 9.5, users: [opencourts] }
+    - passenger-nginx
+    - { role: elasticsearch, version: 1.7.4 }

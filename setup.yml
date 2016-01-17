@@ -1,0 +1,10 @@
+- hosts: web
+  tasks:
+    - name: Copy script for shared memory calculation
+      copy: src=scripts/calculate_shared_memory.sh dest=/tmp/calculate_shared_memory.sh
+
+    - name: Calculate shared memory for kernel
+      command: /bin/bash /tmp/calculate_shared_memory.sh
+      register: output
+
+    - debug: var=output.stdout_lines

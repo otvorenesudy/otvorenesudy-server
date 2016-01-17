@@ -1,0 +1,6 @@
+---
+- name: Copy logrotate configuration
+  copy: src=roles/logrotate/templates/logrotate.conf dest=/etc/logrotate.conf
+
+- name: Copy logrotate configuration for opencourts
+  copy: src=roles/logrotate/templates/opencourts dest=/etc/logrotate.d/opencourts

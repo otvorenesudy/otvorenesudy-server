@@ -1,0 +1,44 @@
+---
+- name: Add keys for PostgreSQL repositories
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
+
+- name: Add certificates
+  apt: name=ca-certificates state=present
+
+- name: Add PostgreSQL repositories
+  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main' state=present update_cache=yes
+
+- name: Install PostgreSQL
+  apt: name={{ item }} state=present force=yes
+  with_items:
+    - postgresql-{{ version }}
+    - postgresql-contrib-{{ version }}
+    - postgresql-client-{{ version }}
+    - libpq5
+    - python-psycopg2
+
+- name: Copy configuration_files
+  template: src=roles/postgresql/templates/{{ item.src }} dest=/etc/postgresql/{{ version }}/main/{{ item.dest }}
+  with_items:
+    - { src: pg_hba.conf.j2, dest: pg_hba.conf }
+    - { src: postgresql.conf.j2, dest: postgresql.conf }
+  notify:
+    - Restart PostgreSQL
+
+- name: Create PostreSQL users
+  postgresql_user:
+    name: '{{item}}'
+    password: "{{ lookup('password', '/tmp/' + item + '.pgpassword length=15') }}"
+    role_attr_flags: 'SUPERUSER'
+    state: present
+  with_items: users
+  when: users|length > 0
+
+- name: Export PostgreSQL user passwords as ENV variables
+  sudo_user: '{{ user }}'
+  lineinfile:
+    dest: ~/.profile
+    line: export {{ item | upper }}_DATABASE_PASSWORD="{{ lookup('file', '/tmp/' + item + '.pgpassword') }}"
+    state: present
+  with_items: users
+  when: users|length > 0

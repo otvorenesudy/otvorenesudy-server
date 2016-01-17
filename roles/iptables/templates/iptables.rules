@@ -1,0 +1,24 @@
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 81 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 53 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 4000 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 12024 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 9050 -j ACCEPT
+-A INPUT -p udp -m udp --dport 9050 -j ACCEPT
+-A INPUT -p tcp -m tcp --source 195.146.135.193/32 --dport 10050 -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -s 127.0.0.1/32 -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i eth0 -p tcp -m tcp --sport 9418 -m state --state ESTABLISHED -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-port-unreachable
+-A FORWARD -i eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -j REJECT --reject-with icmp-port-unreachable
+-A OUTPUT -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -o eth0 -p tcp -m tcp --dport 9418 -m state --state NEW,ESTABLISHED -j ACCEPT
+COMMIT

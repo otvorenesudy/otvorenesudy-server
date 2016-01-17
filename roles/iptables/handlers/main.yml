@@ -1,0 +1,3 @@
+---
+- name: Reload iptables
+  action: shell /sbin/iptables-restore < /etc/iptables.rules
