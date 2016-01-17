@@ -1,6 +1,12 @@
 server {
   listen 80;
-  server_name otvorenesudy.sk otvorenesudy.sme.sk www.otvorenesudy.sk;
+  server_name www.otvorenesudy.sk;
+  return 301 http://otvorenesudy.sk$request_uri;
+}
+
+server {
+  listen 80;
+  server_name otvorenesudy.sk otvorenesudy.sme.sk;
   return 301 https://$host$request_uri;
 }
 
