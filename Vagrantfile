@@ -7,7 +7,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder '.', '/vagrant', type: 'nfs'
 
   config.vm.provider 'virtualbox' do |v|
-    v.name = 'Opencourts API'
+    v.name = 'Open Courts Server'
     v.memory = 2048
     v.cpus = 4
   end
