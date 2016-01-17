@@ -1,4 +1,4 @@
-# Open Courts Server Provisioning
+# Open Courts Server
 
 Provisioning roles and script for Open Courts servers.
 
@@ -6,7 +6,7 @@ Provisioning roles and script for Open Courts servers.
 
 ### Development
 
-First, try out deployment on localhost with Vagrant by uncommenting vagrant `sysctl` settings in `site.yml`.
+First, try out deployment on localhost with Vagrant by uncommenting vagrant's `sysctl` settings in `site.yml`.
 
 ```
 ansible-playbook -i hosts-development site.yml --ask-pass # Vagrant password is vagrant, usually.
@@ -15,6 +15,9 @@ ansible-playbook -i hosts-development site.yml --ask-pass # Vagrant password is 
 ### Production
 
 Make sure, that you use correct `sysctl.kernel` attributes in `site.yml`. If you're not sure about `sysctl.kernel` attributes, just run `ansible-playbook -i hosts setup.yml`.
+
+Run provision.
+
 
 ```
 ansible-playbook -i hosts site.yml
