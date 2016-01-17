@@ -40,6 +40,9 @@
     - { src: opencourts-production.j2, dest: opencourts-production }
 
 - name: Enable application configuration
-  file: src=/etc/nginx/sites-available/opencourts-api-production dest=/etc/nginx/sites-enabled/opencourts-api-production state=link
+  file: src=/etc/nginx/sites-available/{{ item }} dest=/etc/nginx/sites-enabled/{{ item }} state=link
+  with_items:
+    - opencourts-api-production
+    - opencourts-production
   notify:
     - Restart Nginx
