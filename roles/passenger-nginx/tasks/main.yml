@@ -34,7 +34,10 @@
     - Restart Nginx
 
 - name: Create application configuration
-  template: src=roles/passenger-nginx/templates/opencourts-api-production.conf.j2 dest=/etc/nginx/sites-available/opencourts-api-production
+  template: src=roles/passenger-nginx/templates/{{ item.src }} dest=/etc/nginx/sites-available/{{ item.dest }}
+  with_items:
+    - { src: opencourts-api-production.j2, dest: opencourts-api-production }
+    - { src: opencourts-production.j2, dest: opencourts-production }
 
 - name: Enable application configuration
   file: src=/etc/nginx/sites-available/opencourts-api-production dest=/etc/nginx/sites-enabled/opencourts-api-production state=link
