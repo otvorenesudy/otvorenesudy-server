@@ -34,6 +34,15 @@
   with_items: users
   when: users|length > 0
 
+- name: Export PostgreSQL user names as ENV variables
+  sudo_user: '{{ user }}'
+  lineinfile:
+    dest: ~/.profile
+    line: export {{ item | upper }}_DATABASE_USER="{{ item }}"
+    state: present
+  with_items: users
+  when: users|length > 0
+
 - name: Export PostgreSQL user passwords as ENV variables
   sudo_user: '{{ user }}'
   lineinfile:

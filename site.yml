@@ -17,6 +17,6 @@
     - iptables
     - logrotate
     - { role: ruby, rubies: [2.3.0] }
-    - { role: postgresql, version: 9.5, users: [opencourts] }
+    - { role: postgresql, version: 9.5, users: [opencourts, opencourts_api] }
     - passenger-nginx
     - { role: elasticsearch, version: 1.7.4 }
