@@ -37,7 +37,8 @@
 - name: Export PostgreSQL user names as ENV variables
   sudo_user: '{{ user }}'
   lineinfile:
-    dest: ~/.profile
+    dest: ~/.bashrc
+    regexp: ^export {{ item | upper }}_DATABASE_USER=
     line: export {{ item | upper }}_DATABASE_USER="{{ item }}"
     state: present
   with_items: users
@@ -46,7 +47,8 @@
 - name: Export PostgreSQL user passwords as ENV variables
   sudo_user: '{{ user }}'
   lineinfile:
-    dest: ~/.profile
+    dest: ~/.bashrc
+    regexp: ^export {{ item | upper }}_DATABASE_PASSWORD=
     line: export {{ item | upper }}_DATABASE_PASSWORD="{{ lookup('file', '/tmp/' + item + '.pgpassword') }}"
     state: present
   with_items: users
