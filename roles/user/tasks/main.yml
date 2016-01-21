@@ -7,6 +7,29 @@
 - name: Cleanup old keys
   shell: rm -rf /tmp/*.authorized_keys
 
+- name: Setup exports file
+  sudo_user: '{{ user }}'
+  file:
+    path: ~/.exports
+    state: touch
+    group: deploy
+    mode: 0644
+
+- name: Load exports file in .profile
+  sudo_user: '{{ user }}'
+  lineinfile:
+    dest: ~/.profile
+    line: source ~/.exports
+    state: present
+
+- name: Load exports file in .bashrc
+  sudo_user: '{{ user }}'
+  lineinfile:
+    dest: ~/.bashrc
+    line: source ~/.exports
+    insertbefore: BOF
+    state: present
+
 - name: Copy the public keys from Github
   delegate_to: 127.0.0.1
   sudo: no
