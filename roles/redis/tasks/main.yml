@@ -12,7 +12,6 @@
   apt: name={{ item }} state=present force=yes
   with_items:
     - redis-server
-    - redis-client
 
 - name: Copy configuration file
   template: src=roles/redis/templates/redis.conf.j2 dest=/etc/redis/redis.conf
