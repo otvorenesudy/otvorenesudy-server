@@ -21,3 +21,4 @@
     - passenger-nginx
     - { role: elasticsearch, version: 1.7.4 }
     - redis
+    - memcached
