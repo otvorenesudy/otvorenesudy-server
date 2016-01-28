@@ -396,6 +396,9 @@ action.disable_delete_all_indices: true
 # Allow field data caching for speeding up requests
 indices.fielddata.cache.size: 40%
 
+# Set filter heap to reasonable value
+indices.cache.filter.size: 30%
+
 # Lock JVM's memory to disallow swapping, also check out /etc/sysctl.conf
 # for swappiness variable
 bootstrap.mlockall: true

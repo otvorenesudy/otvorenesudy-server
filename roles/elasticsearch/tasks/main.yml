@@ -38,6 +38,14 @@
   lineinfile:
     dest: /etc/init.d/elasticsearch
     regexp: ^#?ES_HEAP_SIZE=.*
-    line: ES_HEAP_SIZE={{ ((sysctl.kernel.shmmax * 0.75) / 1000000000)|round|int }}g
+    line: ES_HEAP_SIZE={{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g
+  notify:
+    - Restart Elasticsearch
+
+- name: Set MAX_LOCKED_MEMORY variable for Elasticsearch
+  lineinfile:
+    dest: /etc/init.d/elasticsearch
+    regexp: ^#?MAX_LOCKED_MEMORY=.*
+    line: MAX_LOCKED_MEMORY=unlimited
   notify:
     - Restart Elasticsearch
