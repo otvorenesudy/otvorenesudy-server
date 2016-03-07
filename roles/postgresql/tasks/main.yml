@@ -28,7 +28,7 @@
 - name: Create PostreSQL users
   postgresql_user:
     name: '{{item}}'
-    password: "{{ lookup('password', '/tmp/' + item + '.pgpassword length=15') }}"
+    password: "{{ lookup('password', '/tmp/' + item + '.pgpassword chars=hexdigits') }}"
     role_attr_flags: 'SUPERUSER'
     state: present
   with_items: users
