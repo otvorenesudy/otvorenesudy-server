@@ -2,7 +2,6 @@ server {
   listen 80 default;
 
   location / {
-    root /etc/nginx/;
-    index index.html;
+    index /etc/nginx/index.html;
   }
 }
