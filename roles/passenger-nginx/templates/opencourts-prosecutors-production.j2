@@ -10,10 +10,10 @@ server {
   ssl_certificate_key /etc/letsencrypt/live/otvorenesudy.sk/privkey.pem;
 
   server_name prokuratori.otvorenesudy.sk;
-  root /home/{{ user }}/projects/otvorenesudy-prosecutors-production/;
+  root /home/{{ user }}/projects/opencourts-prosecutors-production/;
 
-  access_log /var/log/nginx/otvorenesudy-prosecutors-production-access.log combined;
-  error_log  /var/log/nginx/otvorenesudy-prosecutors-production-error.log;
+  access_log /var/log/nginx/opencourts-prosecutors-production-access.log combined;
+  error_log  /var/log/nginx/opencourts-prosecutors-production-error.log;
   rewrite_log on;
 
   location / {

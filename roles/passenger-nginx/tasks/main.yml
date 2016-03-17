@@ -38,13 +38,13 @@
   with_items:
     - { src: opencourts-api-production.j2, dest: opencourts-api-production }
     - { src: opencourts-production.j2, dest: opencourts-production }
-    - { src: otvorenesudy-prosecutors-production.j2, dest: otvorenesudy-prosecutors-production }
+    - { src: opencourts-prosecutors-production.j2, dest: opencourts-prosecutors-production }
 
 - name: Enable application configuration
   file: src=/etc/nginx/sites-available/{{ item }} dest=/etc/nginx/sites-enabled/{{ item }} state=link
   with_items:
     - opencourts-api-production
     - opencourts-production
-    - otvorenesudy-prosecutors-production
+    - opencourts-prosecutors-production
   notify:
     - Restart Nginx
