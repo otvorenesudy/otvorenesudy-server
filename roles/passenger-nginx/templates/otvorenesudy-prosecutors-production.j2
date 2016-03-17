@@ -1,0 +1,22 @@
+server {
+  listen 80;
+  server_name prokuratori.otvorenesudy.sk;
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  ssl_certificate /etc/letsencrypt/live/otvorenesudy.sk/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/otvorenesudy.sk/privkey.pem;
+
+  server_name prokuratori.otvorenesudy.sk;
+  root /home/{{ user }}/projects/otvorenesudy-prosecutors-production/;
+
+  access_log /var/log/nginx/otvorenesudy-prosecutors-production-access.log combined;
+  error_log  /var/log/nginx/otvorenesudy-prosecutors-production-error.log;
+  rewrite_log on;
+
+  location / {
+    try_files $uri /index.html;
+  }
+}
