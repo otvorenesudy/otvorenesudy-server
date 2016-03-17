@@ -37,14 +37,14 @@
   file: path=/home/{{ user }}/.rbenv group=deploy mode='g=rwx' recurse=yes
 
 - name: Add rbenv to application user $PATH
-  sudo_user: '{{ user }}'
+  become_user: '{{ user }}'
   lineinfile:
     dest: ~/.profile
     line: 'export PATH="~/.rbenv/bin:$PATH"'
     state: present
 
 - name: Add gem options to ~/.gemrc
-  sudo_user: '{{ user }}'
+  become_user: '{{ user }}'
   lineinfile:
     dest: ~/.gemrc
     line: 'gem: --no-ri --no-rdoc'
@@ -52,7 +52,7 @@
     create: true
 
 - name: Initialize rbenv on login
-  sudo_user: '{{ user }}'
+  become_user: '{{ user }}'
   lineinfile:
     dest: ~/.profile
     line: 'eval "$(rbenv init -)"'

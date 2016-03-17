@@ -5,10 +5,10 @@
   user: name={{ user }} group=deploy shell=/bin/bash state=present
 
 - name: Cleanup old keys
-  shell: rm -rf /tmp/*.authorized_keys
+  file: path=/tmp/*.authorized_keys state=absent
 
 - name: Setup exports file
-  sudo_user: '{{ user }}'
+  become_user: '{{ user }}'
   file:
     path: ~/.exports
     state: touch
@@ -16,14 +16,14 @@
     mode: 0644
 
 - name: Load exports file in .profile
-  sudo_user: '{{ user }}'
+  become_user: '{{ user }}'
   lineinfile:
     dest: ~/.profile
     line: source ~/.exports
     state: present
 
 - name: Load exports file in .bashrc
-  sudo_user: '{{ user }}'
+  become_user: '{{ user }}'
   lineinfile:
     dest: ~/.bashrc
     line: source ~/.exports

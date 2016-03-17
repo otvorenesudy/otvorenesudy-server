@@ -27,29 +27,29 @@
 
 - name: Create PostreSQL users
   postgresql_user:
-    name: '{{item}}'
+    name: '{{ item }}'
     password: "{{ lookup('password', '/tmp/' + item + '.pgpassword chars=hexdigits') }}"
     role_attr_flags: 'SUPERUSER'
     state: present
-  with_items: users
+  with_items: '{{ users }}'
   when: users|length > 0
 
 - name: Export PostgreSQL user names as ENV variables
-  sudo_user: '{{ user }}'
+  become_user: '{{ user }}'
   lineinfile:
     dest: ~/.exports
     regexp: ^export {{ item | upper }}_DATABASE_USER=
     line: export {{ item | upper }}_DATABASE_USER="{{ item }}"
     state: present
-  with_items: users
+  with_items: '{{ users }}'
   when: users|length > 0
 
 - name: Export PostgreSQL user passwords as ENV variables
-  sudo_user: '{{ user }}'
+  become_user: '{{ user }}'
   lineinfile:
     dest: ~/.exports
     regexp: ^export {{ item | upper }}_DATABASE_PASSWORD=
     line: export {{ item | upper }}_DATABASE_PASSWORD="{{ lookup('file', '/tmp/' + item + '.pgpassword') }}"
     state: present
-  with_items: users
+  with_items: '{{ users }}'
   when: users|length > 0
