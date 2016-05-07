@@ -113,7 +113,7 @@ ssl_key_file = '/etc/ssl/private/ssl-cert-snakeoil.key'     # (change requires r
 
 # - Memory -
 
-shared_buffers = {{ (sysctl.kernel.shmmax / 2000000)|round|int }}MB         # min 128kB
+shared_buffers = {{ (sysctl.kernel.shmmax / 2500000)|round|int }}MB         # min 128kB
                     # (change requires restart)
 #huge_pages = try           # on, off, or try
                     # (change requires restart)
