@@ -38,7 +38,7 @@
   lineinfile:
     dest: /etc/init.d/elasticsearch
     regexp: ^#?ES_HEAP_SIZE=.*
-    line: ES_HEAP_SIZE={{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g
+    line: ES_HEAP_SIZE={{ (sysctl.kernel.shmmax / 1500000000)|round|int }}g
   notify:
     - Restart Elasticsearch
 
