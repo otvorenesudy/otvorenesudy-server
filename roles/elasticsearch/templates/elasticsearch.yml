@@ -408,3 +408,6 @@ network.bind_host: localhost
 
 # Discover clusters only on localhost
 node.local: true
+
+# Thread Pool settings for search
+threadpool.search.type: cached

@@ -3,13 +3,13 @@
   apt_repository: repo='ppa:webupd8team/java'
 
 - name: Accept Java 8 Licence
-  sudo: yes
+  become: yes
   shell: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | tee /etc/oracle-java-8-licence-acceptance | /usr/bin/debconf-set-selections
   args:
     creates: /etc/oracle-java-8-licence-acceptance
 
 - name: Install Oracle Java 8
-  sudo: yes
+  become: yes
   apt: name={{item}} state=latest
   with_items:
     - oracle-java8-installer
@@ -21,12 +21,12 @@
   register: st
 
 - name: Fetch Elasticsearch package
-  sudo: yes
+  become: yes
   get_url: url=https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-{{ version }}.deb dest=/home/{{ user }}/ thirsty=yes mode=0440
   when: not st.stat.exists
 
 - name: Install Elasticsearch package
-  sudo: yes
+  become: yes
   action: shell dpkg -i -E --force-confnew /home/{{ user }}/elasticsearch-{{ version }}.deb 2>&1 | grep skipping | wc -l
 
 - name: Copy Elasticsearch configuration
@@ -38,7 +38,15 @@
   lineinfile:
     dest: /etc/init.d/elasticsearch
     regexp: ^#?ES_HEAP_SIZE=.*
-    line: ES_HEAP_SIZE={{ (sysctl.kernel.shmmax / 1500000000)|round|int }}g
+    line: ES_HEAP_SIZE={{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g
+  notify:
+    - Restart Elasticsearch
+
+- name: Set ES_JAVA_OPTS variable for Elasticsearch
+  lineinfile:
+    dest: /etc/init.d/elasticsearch
+    regexp: ^#?ES_JAVA_OPTS=.*
+    line: ES_JAVA_OPTS="-Xms{{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g -Xmx{{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g"
   notify:
     - Restart Elasticsearch
 
