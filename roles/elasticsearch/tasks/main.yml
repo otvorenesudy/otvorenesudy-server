@@ -10,11 +10,12 @@
 
 - name: Install Oracle Java 8
   become: yes
-  apt: name={{item}} state=latest
-  with_items:
-    - oracle-java8-installer
-    - ca-certificates
-    - oracle-java8-set-default
+  apt:
+    name:
+      - oracle-java8-installer
+      - ca-certificates
+      - oracle-java8-set-default
+    state: latest
 
 - name: Check if Elasticsearch package is downloaded
   stat: path=/home/{{ user }}/elasticsearch-{{ version }}.deb

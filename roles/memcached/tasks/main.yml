@@ -1,6 +1,10 @@
 ---
 - name: Install memcached server
-  apt: pkg=memcached state=present update-cache=yes
+  apt:
+    name:
+      - memcached
+    state: present
+    update-cache: yes
 
 - name: Install configuration file
   template: src=roles/memcached/templates/memcached.conf.j2 dest=/etc/memcached.conf

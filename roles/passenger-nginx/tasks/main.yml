@@ -3,19 +3,22 @@
   apt_key: keyserver=keyserver.ubuntu.com id=561F9B9CAC40B2F7 state=present
 
 - name: Use apt via HTTPS
-  apt: name={{ item }} state=present
-  with_items:
-    - apt-transport-https
-    - ca-certificates
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+    state: present
 
 - name: Add Passenger's apt repositories
   apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger {{ansible_distribution_release}} main' state=present update_cache=yes
 
 - name: Install Nginx
-  apt: name={{ item }} state=present force=yes
-  with_items:
-   - nginx-full
-   - passenger
+  apt:
+    name:
+      - nginx-full
+      - passenger
+    state: present
+    force: yes
 
 - name: Copy Nginx's configuration
   copy: src=roles/passenger-nginx/templates/nginx.conf dest=/etc/nginx/nginx.conf
@@ -39,6 +42,9 @@
     - { src: opencourts-api-production.j2, dest: opencourts-api-production }
     - { src: opencourts-production.j2, dest: opencourts-production }
     - { src: opencourts-prosecutors-production.j2, dest: opencourts-prosecutors-production }
+    - { src: opencourts-prokuratura-production.j2, dest: opencourts-prokuratura-production }
+  notify:
+    - Restart Nginx
 
 - name: Enable application configuration
   file: src=/etc/nginx/sites-available/{{ item }} dest=/etc/nginx/sites-enabled/{{ item }} state=link
@@ -46,5 +52,6 @@
     - opencourts-api-production
     - opencourts-production
     - opencourts-prosecutors-production
+    - opencourts-prokuratura-production
   notify:
     - Restart Nginx

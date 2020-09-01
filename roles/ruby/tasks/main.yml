@@ -1,16 +1,17 @@
 ---
 - name: Install rbenv dependencies
-  apt: name={{ item }} state=present
-  with_items:
-    - git-core
-    - build-essential
-    - libreadline-dev
-    - libssl-dev
-    - libyaml-dev
-    - libxml2-dev
-    - libxslt1-dev
-    - zlib1g-dev
-    - libffi-dev
+  apt:
+    name:
+      - git-core
+      - build-essential
+      - libreadline-dev
+      - libssl-dev
+      - libyaml-dev
+      - libxml2-dev
+      - libxslt1-dev
+      - zlib1g-dev
+      - libffi-dev
+    state: present
 
 - name: Check if rbenv is already installed
   stat: path=/home/{{ user }}/.rbenv
@@ -32,6 +33,10 @@
     repo: https://github.com/sstephenson/ruby-build.git
     dest: /home/{{ user }}/.rbenv/plugins/ruby-build
   when: not st.stat.exists
+
+- name: Update ruby-build plugin
+  become_user: '{{ user }}'
+  command: 'chdir=/home/{{ user }}/.rbenv/plugins/ruby-build git pull'
 
 - name: Grant application user access to rbenv
   file: path=/home/{{ user }}/.rbenv group=deploy mode='g=rwx' recurse=yes
@@ -60,12 +65,11 @@
 
 - name: Detect installed ruby versions
   command: 'sudo -iu {{ user }} rbenv versions'
-  ignore_errors: yes
   register: rbenv_versions_output
 
 - name: Install ruby version
   command: 'sudo -iu {{ user }} rbenv install {{ item }}'
-  when: '"{{ item }}" not in rbenv_versions_output.stdout'
+  when: item not in rbenv_versions_output.stdout
   with_items: '{{ rubies }}'
 
 - name: Set initial ruby

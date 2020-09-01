@@ -4,6 +4,12 @@ Provisioning roles and script for Open Courts servers.
 
 ## Deployment
 
+Make sure to install required tools
+
+```
+brew install ansible hudochenkov/sshpass/sshpass
+```
+
 ### Development
 
 First, try out deployment on localhost with Vagrant by uncommenting vagrant's `sysctl` settings in `site.yml`.
@@ -22,6 +28,8 @@ Run provision.
 ```
 ansible-playbook -i hosts site.yml
 ```
+
+**Note**: *You'll need the root password here, as the root is used as a users to setup up the server.*
 
 ## Contributing
 

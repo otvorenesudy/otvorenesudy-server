@@ -17,8 +17,8 @@
     - sysctl
     - iptables
     - logrotate
-    - { role: ruby, rubies: [2.3.0] }
-    - { role: postgresql, version: 9.5, users: [opencourts, opencourts_api] }
+    - { role: ruby, rubies: [2.3.8, 2.5.0, 2.7.1] }
+    - { role: postgresql, version: 9.5, users: [opencourts, opencourts_api, opencourts_prokuratura] }
     - passenger-nginx
     - { role: elasticsearch, version: 1.7.6 }
     - redis

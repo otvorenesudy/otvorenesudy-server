@@ -1,17 +1,21 @@
 ---
 - name: Install dependencies for Redis
-  apt: name={{ item }} state=present force=yes
-  with_items:
-    - build-essential
-    - tcl8.5
+  apt:
+    name:
+      - build-essential
+      - tcl8.5
+    state: present
+    force: yes
 
 - name: Add Chris Lea's PPA for Redis
   apt_repository: repo=ppa:chris-lea/redis-server state=present update_cache=true
 
 - name: Install Redis
-  apt: name={{ item }} state=present force=yes
-  with_items:
-    - redis-server
+  apt:
+    name:
+      - redis-server
+    state: present
+    force: yes
 
 - name: Copy configuration file
   template: src=roles/redis/templates/redis.conf.j2 dest=/etc/redis/redis.conf

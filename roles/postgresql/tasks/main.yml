@@ -3,19 +3,24 @@
   apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc state=present
 
 - name: Add certificates
-  apt: name=ca-certificates state=present
+  apt:
+    name:
+      - ca-certificates
+    state: present
 
 - name: Add PostgreSQL repositories
   apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main' state=present update_cache=yes
 
 - name: Install PostgreSQL
-  apt: name={{ item }} state=present force=yes
-  with_items:
-    - postgresql-{{ version }}
-    - postgresql-contrib-{{ version }}
-    - postgresql-client-{{ version }}
-    - libpq5
-    - python-psycopg2
+  apt:
+    name:
+      - postgresql-{{ version }}
+      - postgresql-contrib-{{ version }}
+      - postgresql-client-{{ version }}
+      - libpq5
+      - python-psycopg2
+    state: present
+    force: yes
 
 - name: Copy configuration_files
   template: src=roles/postgresql/templates/{{ item.src }} dest=/etc/postgresql/{{ version }}/main/{{ item.dest }}
@@ -33,6 +38,7 @@
     state: present
   with_items: '{{ users }}'
   when: users|length > 0
+  no_log: True
 
 - name: Export PostgreSQL user names as ENV variables
   become_user: '{{ user }}'

@@ -17,3 +17,13 @@
                                     notifempty
                                     copytruncate
 }
+
+/home/deploy/projects/opencourts-prokuratura-production/shared/log/*.log {
+                                    daily
+                                    missingok
+                                    rotate 5
+                                    compress
+                                    delaycompress
+                                    notifempty
+                                    copytruncate
+}
