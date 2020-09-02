@@ -19,6 +19,7 @@
       - passenger
     state: present
     force: yes
+    update_cache: true
 
 - name: Copy Nginx's configuration
   copy: src=roles/passenger-nginx/templates/nginx.conf dest=/etc/nginx/nginx.conf

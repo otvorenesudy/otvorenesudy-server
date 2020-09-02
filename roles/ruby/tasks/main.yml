@@ -77,7 +77,5 @@
   become_user: '{{ user }}'
 
 - name: Install bundler
-  shell: |
-    sudo -iu {{ user }} rbenv use {{ item.version }}
-    sudo -iu {{ user }} gem install bundler -v {{ item.bundler }} --no-ri --no-rdoc
+  shell: sudo -iu {{ user }} bash -c 'source .profile && rbenv shell {{ item.version }} && gem install bundler -v {{ item.bundler }}'
   with_items: '{{ rubies }}'
