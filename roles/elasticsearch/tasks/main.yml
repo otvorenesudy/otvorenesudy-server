@@ -58,3 +58,9 @@
     line: MAX_LOCKED_MEMORY=unlimited
   notify:
     - Restart Elasticsearch
+
+- name: Set CRON job to restart Elasticsearch every 8 hours
+  cron:
+    name: 'Restart Elasticsearch every 8 hours'
+    hour: "6,14,22"
+    job: service elasticsearch restart

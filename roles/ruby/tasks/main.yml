@@ -36,7 +36,7 @@
 
 - name: Update ruby-build plugin
   become_user: '{{ user }}'
-  command: 'chdir=/home/{{ user }}/.rbenv/plugins/ruby-build git pull'
+  command: chdir=/home/{{ user }}/.rbenv/plugins/ruby-build git pull
 
 - name: Grant application user access to rbenv
   file: path=/home/{{ user }}/.rbenv group=deploy mode='g=rwx' recurse=yes
@@ -45,7 +45,7 @@
   become_user: '{{ user }}'
   lineinfile:
     dest: ~/.profile
-    line: 'export PATH="~/.rbenv/bin:$PATH"'
+    line: export PATH="~/.rbenv/bin:$PATH"
     state: present
 
 - name: Add gem options to ~/.gemrc
@@ -60,20 +60,24 @@
   become_user: '{{ user }}'
   lineinfile:
     dest: ~/.profile
-    line: 'eval "$(rbenv init -)"'
+    line: eval "$(rbenv init -)"
     state: present
 
 - name: Detect installed ruby versions
-  command: 'sudo -iu {{ user }} rbenv versions'
+  command: sudo -iu {{ user }} rbenv versions
   register: rbenv_versions_output
 
 - name: Install ruby version
-  command: 'sudo -iu {{ user }} rbenv install {{ item }}'
-  when: item not in rbenv_versions_output.stdout
+  command: sudo -iu {{ user }} rbenv install {{ item.version }}
+  when: item.version not in rbenv_versions_output.stdout
   with_items: '{{ rubies }}'
 
 - name: Set initial ruby
-  command: 'sudo -iu {{ user }} rbenv global {{ rubies.0 }}'
+  command: sudo -iu {{ user }} rbenv global {{ rubies.0.version }}
+  become_user: '{{ user }}'
 
 - name: Install bundler
-  command: 'sudo -iu {{ user }} gem install bundler --no-ri --no-rdoc'
+  shell: |
+    sudo -iu {{ user }} rbenv use {{ item.version }}
+    sudo -iu {{ user }} gem install bundler -v {{ item.bundler }} --no-ri --no-rdoc
+  with_items: '{{ rubies }}'

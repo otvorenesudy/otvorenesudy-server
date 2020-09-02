@@ -34,8 +34,8 @@
   delegate_to: 127.0.0.1
   become: no
   get_url: url=https://github.com/{{item}}.keys dest=/tmp/{{item}}.authorized_keys
-  with_items: "{{ github_ssh_keys }}"
+  with_items: '{{ github_ssh_keys }}'
 
 - name: Install public keys
-  authorized_key: user={{ user }} key="{{ lookup('file', '/tmp/' + item + '.authorized_keys') }}"
-  with_items: "{{ github_ssh_keys }}"
+  authorized_key: user={{ user }} key={{ lookup('file', '/tmp/' + item + '.authorized_keys') }}
+  with_items: '{{ github_ssh_keys }}'

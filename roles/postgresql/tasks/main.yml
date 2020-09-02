@@ -34,7 +34,7 @@
   postgresql_user:
     name: '{{ item }}'
     password: "{{ lookup('password', '/tmp/' + item + '.pgpassword chars=hexdigits') }}"
-    role_attr_flags: 'SUPERUSER'
+    role_attr_flags: SUPERUSER
     state: present
   with_items: '{{ users }}'
   when: users|length > 0
@@ -45,7 +45,7 @@
   lineinfile:
     dest: ~/.exports
     regexp: ^export {{ item | upper }}_DATABASE_USER=
-    line: export {{ item | upper }}_DATABASE_USER="{{ item }}"
+    line: export {{ item | upper }}_DATABASE_USER={{ item }}
     state: present
   with_items: '{{ users }}'
   when: users|length > 0

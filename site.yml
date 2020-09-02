@@ -1,6 +1,7 @@
 - hosts: web
   become: true
   become_method: sudo
+  become_flags: -i
   vars:
     user: deploy
     sysctl:
@@ -12,14 +13,47 @@
         # Vagrant, uncomment for testing purposes
         # shmmax: 1050267648 # 1GB
         # shmall: 256413
+
+    # Let's Encrypt
+    certbot_auto_renew_user: deploy
+    certbot_auto_renew_minute: '0'
+    certbot_auto_renew_hour: '5'
+    certbot_auto_renew_options: --quiet --no-self-upgrade
+    certbot_create_if_missing: true
+    certbot_create_method: standalone
+    certbot_admin_email: admin@otvorenesudy.sk
+    certbot_certs:
+       - email: admin@otvorenesudy.sk
+         domains:
+           - otvorenesudy.sk
+           - api.otvorenesudy.sk
+           - prokuratori.otvorenesudy.sk
+           - prokuratura.otvorenesudy.sk
+           - otvorenesudy.sme.sk
+    certbot_create_standalone_stop_services:
+      - nginx
+    certbot_install_from_source: true
+    certbot_repo: https://github.com/certbot/certbot.git
+    certbot_version: v0.30.2
+    certbot_keep_updated: false
+    certbot_create_command: "{{ certbot_script }} certonly --standalone --noninteractive --agree-tos --email {{ cert_item.email }} -d {{ cert_item.domains | join(',') }}"
+
   roles:
     - { role: user, github_ssh_keys: [smolnar, pavolzbell] }
-    - sysctl
-    - iptables
-    - logrotate
-    - { role: ruby, rubies: [2.3.8, 2.5.0, 2.7.1] }
+    - { role: sysctl }
+    - { role: iptables }
+    - { role: logrotate }
+    - {
+        role: ruby,
+        rubies: [
+          { version: 2.3.8, bundler: 1.17.3 },
+          { version: 2.5.0, bundler: 1.17.3 },
+          { version: 2.7.1, bundler: 2.1.4 }
+        ]
+      }
     - { role: postgresql, version: 9.5, users: [opencourts, opencourts_api, opencourts_prokuratura] }
-    - passenger-nginx
+    - { role: passenger-nginx }
     - { role: elasticsearch, version: 1.7.6 }
-    - redis
-    - memcached
+    - { role: redis }
+    - { role: memcached }
+    - { role: letsencrypt, tags: [letsencrypt] }

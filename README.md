@@ -2,13 +2,14 @@
 
 Provisioning roles and script for Open Courts servers.
 
-## Deployment
-
-Make sure to install required tools
+## Installation
 
 ```
+git clone --recursive git://github.com/otvorenesudy/otvorenesudy-server.git
 brew install ansible hudochenkov/sshpass/sshpass
 ```
+
+## Deployment
 
 ### Development
 
