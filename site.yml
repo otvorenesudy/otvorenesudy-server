@@ -15,7 +15,7 @@
         # shmall: 256413
 
     # Let's Encrypt
-    certbot_auto_renew_user: deploy
+    certbot_auto_renew_user: root
     certbot_auto_renew_minute: '0'
     certbot_auto_renew_hour: '5'
     certbot_auto_renew_options: --quiet --no-self-upgrade
@@ -28,7 +28,6 @@
            - otvorenesudy.sk
            - api.otvorenesudy.sk
            - prokuratori.otvorenesudy.sk
-           - prokuratura.otvorenesudy.sk
            - otvorenesudy.sme.sk
     certbot_create_standalone_stop_services:
       - nginx
