@@ -38,6 +38,7 @@
     certbot_create_command: "{{ certbot_script }} certonly --standalone --noninteractive --agree-tos --email {{ cert_item.email }} -d {{ cert_item.domains | join(',') }}"
 
   roles:
+    - { role: system }
     - { role: user, github_ssh_keys: [smolnar, pavolzbell] }
     - { role: sysctl }
     - { role: iptables }
