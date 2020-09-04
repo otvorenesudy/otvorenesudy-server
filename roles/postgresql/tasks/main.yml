@@ -25,7 +25,6 @@
 - name: Copy configuration_files
   template: src=roles/postgresql/templates/{{ item.src }} dest=/etc/postgresql/{{ version }}/main/{{ item.dest }}
   with_items:
-    - { src: pg_hba.conf.j2, dest: pg_hba.conf }
     - { src: postgresql.conf.j2, dest: postgresql.conf }
   notify:
     - Restart PostgreSQL

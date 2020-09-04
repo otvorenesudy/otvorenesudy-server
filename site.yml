@@ -51,7 +51,7 @@
           { version: 2.7.1, bundler: 2.1.4 }
         ]
       }
-    - { role: postgresql, version: 9.5, users: [opencourts, opencourts_api, opencourts_prokuratura] }
+    - { role: postgresql, version: 11, users: [opencourts, opencourts_api, opencourts_prokuratura] }
     - { role: passenger-nginx }
     - { role: elasticsearch, version: 1.7.6 }
     - { role: redis }

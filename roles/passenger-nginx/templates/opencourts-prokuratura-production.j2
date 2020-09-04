@@ -1,15 +1,15 @@
 server {
-  listen 12024;
-  server_name prokuratura.otvorenesudy.sk;
+  listen 12023;
+  server_name otvorenesudy.sk;
   return 301 https://$host$request_uri;
 }
 
 server {
-  listen 443 ssl;
+  listen 12024 ssl;
   ssl_certificate /etc/letsencrypt/live/otvorenesudy.sk/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/otvorenesudy.sk/privkey.pem;
 
-  server_name prokuratura.otvorenesudy.sk;
+  server_name otvorenesudy.sk;
 
   passenger_enabled on;
   rails_env production;

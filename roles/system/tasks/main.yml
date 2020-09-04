@@ -9,3 +9,10 @@
     pkg:
       - gcc
       - g++
+      - node
+    update_cache: yes
+    state: latest
+    force: true
+
+- name: Install yarn
+  command: npm install --global yarn
