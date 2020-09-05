@@ -10,6 +10,9 @@
       - gcc
       - g++
       - node
+      - dirmngr
+      - gnupg
+      - libcurl4-openssl-dev
     update_cache: yes
     state: latest
     force: true

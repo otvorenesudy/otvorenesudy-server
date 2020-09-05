@@ -33,8 +33,7 @@
       - nginx
     certbot_install_from_source: true
     certbot_repo: https://github.com/certbot/certbot.git
-    certbot_version: v0.30.2
-    certbot_keep_updated: false
+    certbot_keep_updated: true
     certbot_create_command: "{{ certbot_script }} certonly --standalone --noninteractive --agree-tos --email {{ cert_item.email }} -d {{ cert_item.domains | join(',') }}"
 
   roles:
@@ -52,8 +51,8 @@
         ]
       }
     - { role: postgresql, version: 11, users: [opencourts, opencourts_api, opencourts_prokuratura] }
-    - { role: passenger-nginx }
-    - { role: elasticsearch, version: 1.7.6 }
+    - { role: passenger-nginx, tags: nginx }
+    - { role: elasticsearch, version: 1.7.6, tags: elasticsearch }
     - { role: redis }
     - { role: memcached }
     - { role: letsencrypt, tags: [letsencrypt] }

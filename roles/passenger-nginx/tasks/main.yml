@@ -15,11 +15,19 @@
 - name: Install Nginx
   apt:
     name:
+      - libnginx-mod-http-passenger
       - nginx-full
-      - passenger
+      - nginx-extras
     state: present
     force: yes
     update_cache: true
+
+- name: Link Passenger module
+  file:
+    src: /usr/share/nginx/modules-available/mod-http-passenger.load
+    dest: /etc/nginx/modules-enabled/50-mod-http-passenger.conf
+    state: link
+    force: true
 
 - name: Copy Nginx's configuration
   copy: src=roles/passenger-nginx/templates/nginx.conf dest=/etc/nginx/nginx.conf
