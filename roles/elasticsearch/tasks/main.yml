@@ -30,6 +30,17 @@
   become: yes
   action: shell dpkg -i -E --force-confnew /home/{{ user }}/elasticsearch-{{ version }}.deb 2>&1 | grep skipping | wc -l
 
+- name: Check if /var/lib/elasticsearch is symlinked to /data
+  stat:
+    path: /var/lib/elasticsearch
+  register: st
+
+- name: Move and symlink /var/lib/elasticsearch to /data
+  shell: |
+    mv /var/lib/elasticsearch /data/var/lib/elasticsearch
+    ln -s /data/var/lib/elasticsearch /var/lib/elasticsearch
+  when: not st.stat.islnk
+
 - name: Copy Elasticsearch configuration
   copy: src=roles/elasticsearch/templates/elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
   notify:

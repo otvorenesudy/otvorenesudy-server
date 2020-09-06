@@ -22,6 +22,17 @@
     state: present
     force: yes
 
+- name: Check if /var/lib/postgresql/{{ version }} is symlinked to /data
+  stat:
+    path: /var/lib/postgresql/{{ version }}
+  register: st
+
+- name: Move and symlink /var/lib/postgresql/{{ version }} to /data
+  shell: |
+    mv /var/lib/postgresql/{{ version }} /data/var/lib/postgresql/{{ version }}
+    ln -s /data/var/lib/postgresql/{{ version }} /var/lib/postgresql/{{ version }}
+  when: not st.stat.islnk
+
 - name: Copy configuration_files
   template: src=roles/postgresql/templates/{{ item.src }} dest=/etc/postgresql/{{ version }}/main/{{ item.dest }}
   with_items:

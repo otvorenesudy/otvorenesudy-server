@@ -53,6 +53,6 @@
     - { role: postgresql, version: 11, users: [opencourts, opencourts_api, opencourts_prokuratura] }
     - { role: passenger-nginx, tags: nginx }
     - { role: elasticsearch, version: 1.7.6, tags: elasticsearch }
-    - { role: redis }
+    - { role: redis, tags: redis }
     - { role: memcached }
     - { role: letsencrypt, tags: [letsencrypt] }
