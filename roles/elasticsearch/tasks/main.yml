@@ -41,6 +41,17 @@
     ln -s /data/var/lib/elasticsearch /var/lib/elasticsearch
   when: not st.stat.islnk
 
+- name: Check if /var/log/elasticsearch is symlinked to /data
+  stat:
+    path: /var/log/elasticsearch
+  register: st
+
+- name: Move and symlink /var/log/elasticsearch to /data
+  shell: |
+    mv /var/log/elasticsearch /data/var/log/elasticsearch
+    ln -s /data/var/log/elasticsearch /var/log/elasticsearch
+  when: not st.stat.islnk
+
 - name: Copy Elasticsearch configuration
   copy: src=roles/elasticsearch/templates/elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
   notify:
