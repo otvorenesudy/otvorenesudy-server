@@ -160,7 +160,7 @@
 
 # Path to log files:
 #
-path.logs: /data/var/logs/elasticsearch
+path.logs: /data/var/log/elasticsearch
 
 # Path to where plugins are installed:
 #
@@ -410,5 +410,5 @@ network.bind_host: localhost
 node.local: true
 
 # Thread Pool settings for search
-# threadpool.search.type: cached
-threadpool.search.queue_size: 100
+threadpool.search.type: cached
+# threadpool.search.queue_size: 100

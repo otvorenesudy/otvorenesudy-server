@@ -51,6 +51,8 @@
     mv /var/log/elasticsearch /data/var/log/elasticsearch
     ln -s /data/var/log/elasticsearch /var/log/elasticsearch
   when: not st.stat.islnk
+  notify:
+    - Restart Elasticsearch
 
 - name: Copy Elasticsearch configuration
   copy: src=roles/elasticsearch/templates/elasticsearch.yml dest=/etc/elasticsearch/elasticsearch.yml
@@ -84,5 +86,5 @@
 - name: Set CRON job to restart Elasticsearch every 8 hours
   cron:
     name: 'Restart Elasticsearch every 8 hours'
-    hour: "6,14,22"
+    hour: "4,12,20"
     job: service elasticsearch restart
