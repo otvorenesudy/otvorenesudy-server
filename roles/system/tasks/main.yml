@@ -13,6 +13,7 @@
       - dirmngr
       - gnupg
       - libcurl4-openssl-dev
+      - chromium-chromedriver
     update_cache: yes
     state: latest
     force: true

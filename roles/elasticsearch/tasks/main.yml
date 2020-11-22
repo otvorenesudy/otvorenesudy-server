@@ -61,7 +61,7 @@
 
 - name: Set ES_HEAP_SIZE variable for Elasticsearch
   lineinfile:
-    dest: /etc/init.d/elasticsearch
+    dest: /etc/default/elasticsearch
     regexp: ^#?ES_HEAP_SIZE=.*
     line: ES_HEAP_SIZE={{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g
   notify:
@@ -69,7 +69,7 @@
 
 - name: Set ES_JAVA_OPTS variable for Elasticsearch
   lineinfile:
-    dest: /etc/init.d/elasticsearch
+    dest: /etc/default/elasticsearch
     regexp: ^#?ES_JAVA_OPTS=.*
     line: ES_JAVA_OPTS="-Xms{{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g -Xmx{{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g"
   notify:
@@ -77,14 +77,30 @@
 
 - name: Set MAX_LOCKED_MEMORY variable for Elasticsearch
   lineinfile:
-    dest: /etc/init.d/elasticsearch
+    dest: /etc/default/elasticsearch
     regexp: ^#?MAX_LOCKED_MEMORY=.*
     line: MAX_LOCKED_MEMORY=unlimited
   notify:
     - Restart Elasticsearch
 
-- name: Set CRON job to restart Elasticsearch every 8 hours
+- name: Set unlimited hard locked memory for Elasticsearch
+  lineinfile:
+    dest: /etc/security/limits.conf
+    regexp: "\\* hard memlock .*"
+    line: "* hard memlock unlimited"
+  notify:
+    - Restart Elasticsearch
+
+- name: Set unlimited soft locked memory for Elasticsearch
+  lineinfile:
+    dest: /etc/security/limits.conf
+    regexp: "\\* soft memlock .*"
+    line: "* soft memlock unlimited"
+  notify:
+    - Restart Elasticsearch
+
+- name: Set CRON job to restart Elasticsearch regularly
   cron:
-    name: 'Restart Elasticsearch every 8 hours'
-    hour: "4,12,20"
-    job: service elasticsearch restart
+    name: 'Restart Elasticsearch regularly'
+    hour: "6"
+    job: /bin/systemctl restart elasticsearch

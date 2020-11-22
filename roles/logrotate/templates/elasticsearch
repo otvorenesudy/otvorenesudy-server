@@ -1,4 +1,5 @@
 /var/log/elasticsearch/*.log {
+    su elasticsearch elasticsearch
     daily
     rotate 10
     size 50M

@@ -7,8 +7,8 @@
     sysctl:
       kernel:
         # Webserver
-        shmmax: 12574642176 # 12GB of 24GB RAM in total
-        shmall: 3069981
+        shmmax: 16797818880 # 12GB of 24GB RAM in total
+        shmall: 4101030
 
         # Vagrant, uncomment for testing purposes
         # shmmax: 1050267648 # 1GB
@@ -18,7 +18,7 @@
     certbot_auto_renew_user: root
     certbot_auto_renew_minute: '0'
     certbot_auto_renew_hour: '5'
-    certbot_auto_renew_options: --quiet --no-self-upgrade
+    certbot_auto_renew_options: --quiet --no-self-upgrade --nginx
     certbot_create_if_missing: true
     certbot_create_method: standalone
     certbot_admin_email: admin@otvorenesudy.sk
