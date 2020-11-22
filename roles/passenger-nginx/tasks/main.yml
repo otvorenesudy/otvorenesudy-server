@@ -63,7 +63,6 @@
   with_items:
     - { src: opencourts-api-production.j2, dest: opencourts-api-production }
     - { src: opencourts-production.j2, dest: opencourts-production }
-    - { src: opencourts-prosecutors-production.j2, dest: opencourts-prosecutors-production }
     - { src: opencourts-prokuratura-production.j2, dest: opencourts-prokuratura-production }
   notify:
     - Restart Nginx
@@ -73,7 +72,6 @@
   with_items:
     - opencourts-api-production
     - opencourts-production
-    - opencourts-prosecutors-production
     - opencourts-prokuratura-production
   notify:
     - Restart Nginx

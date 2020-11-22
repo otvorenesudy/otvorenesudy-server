@@ -27,7 +27,7 @@
          domains:
            - otvorenesudy.sk
            - api.otvorenesudy.sk
-           - prokuratori.otvorenesudy.sk
+           - prokuratura.otvorenesudy.sk
            - otvorenesudy.sme.sk
     certbot_create_standalone_stop_services:
       - nginx
