@@ -63,7 +63,7 @@
   lineinfile:
     dest: /etc/default/elasticsearch
     regexp: ^#?ES_HEAP_SIZE=.*
-    line: ES_HEAP_SIZE={{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g
+    line: ES_HEAP_SIZE=2g
   notify:
     - Restart Elasticsearch
 
@@ -71,7 +71,7 @@
   lineinfile:
     dest: /etc/default/elasticsearch
     regexp: ^#?ES_JAVA_OPTS=.*
-    line: ES_JAVA_OPTS="-Xms{{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g -Xmx{{ (sysctl.kernel.shmmax / 1000000000)|round|int }}g"
+    line: ES_JAVA_OPTS="-Xms12g -Xmx12g"
   notify:
     - Restart Elasticsearch
 

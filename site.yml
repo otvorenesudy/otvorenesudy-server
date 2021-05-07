@@ -56,3 +56,4 @@
     - { role: redis, tags: redis }
     - { role: memcached }
     - { role: letsencrypt, tags: [letsencrypt] }
+    - { role: apps, tags: [apps] }

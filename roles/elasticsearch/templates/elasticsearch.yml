@@ -410,5 +410,6 @@ network.bind_host: localhost
 node.local: true
 
 # Thread Pool settings for search
-threadpool.search.type: cached
-# threadpool.search.queue_size: 100
+threadpool.search.type: fixed
+threadpool.search.size: 30
+threadpool.search.queue_size: 1000

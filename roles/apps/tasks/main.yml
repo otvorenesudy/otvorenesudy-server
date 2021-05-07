@@ -1,0 +1,18 @@
+- name: Copy self-recovery script
+  copy: src=roles/apps/scripts/self-recovery.sh dest=/root/
+
+- name: Run self-recovery script every minute
+  cron:
+    name: 'Trigger self-recovery check'
+    minute: "*/30"
+    job: /bin/bash /root/self-recovery.sh >> /root/self-recovery.log
+
+- name: Copy Sidekiq restart script
+  copy: src=roles/apps/scripts/sidekiq.sh dest=/home/deploy
+
+- name: Trigger Sidekiq restart script
+  cron:
+    name: 'Restart Sidekiq'
+    hour: "*/12"
+    user: deploy
+    job: /bin/bash /home/deploy/sidekiq.sh >> /home/deploy/sidekiq.log
