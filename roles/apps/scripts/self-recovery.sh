@@ -15,10 +15,10 @@ do
     status=$(curl -s -o /dev/null -w '%{http_code}\n' "${url}")
 
     if ((status != 200)); then
-      /bin/systemctl restart elasticsearch
+      # /bin/systemctl restart elasticsearch
       /bin/systemctl restart postgresql
       /bin/systemctl restart memcached
-      /bin/systemctl restart redis
+      /bin/systemctl restart redis-server
       /bin/systemctl restart nginx
 
       exit 0
