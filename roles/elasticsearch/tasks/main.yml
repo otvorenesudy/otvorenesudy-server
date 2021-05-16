@@ -101,6 +101,6 @@
 
 - name: Set CRON job to restart Elasticsearch regularly
   cron:
-    name: 'Restart Elasticsearch regularly'
-    hour: "6"
-    job: /bin/systemctl restart elasticsearch
+   name: 'Restart Elasticsearch regularly'
+   hour: "6"
+   job: /bin/systemctl restart elasticsearch
