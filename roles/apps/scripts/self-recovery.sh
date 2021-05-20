@@ -12,10 +12,9 @@ array=(
 
 for url in "${array[@]}"
 do
-    status=$(curl --connect-timeout 15 -s -o /dev/null -w '%{http_code}\n' "${url}")
+    status=$(curl --max-time 15 -s -o /dev/null -w '%{http_code}\n' "${url}")
 
     if ((status != 200)); then
-      # /bin/systemctl restart elasticsearch
       /bin/systemctl restart postgresql
       /bin/systemctl restart memcached
       /bin/systemctl restart redis-server
@@ -23,7 +22,7 @@ do
     fi
 done
 
-status=$(curl --connect-timeout 15 -s -o /dev/null -w '%{http_code}\n' "http://localhost:9200")
+status=$(curl --max-time 15 -s -o /dev/null -w '%{http_code}\n' "http://localhost:9200/decrees_production/_search")
 
 if ((status != 200)); then
   /bin/systemctl restart elasticsearch
