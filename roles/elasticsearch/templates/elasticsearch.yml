@@ -351,20 +351,20 @@ path.logs: /data/var/log/elasticsearch
 
 # Shard level query and fetch threshold logging.
 
-index.search.slowlog.threshold.query.warn: -1
-index.search.slowlog.threshold.query.info: -1
-index.search.slowlog.threshold.query.debug: -1
-index.search.slowlog.threshold.query.trace: -1
+#index.search.slowlog.threshold.query.warn: -1
+#index.search.slowlog.threshold.query.info: -1
+#index.search.slowlog.threshold.query.debug: -1
+#index.search.slowlog.threshold.query.trace: -1
 
-index.search.slowlog.threshold.fetch.warn: -1
-index.search.slowlog.threshold.fetch.info: -1
-index.search.slowlog.threshold.fetch.debug: -1
-index.search.slowlog.threshold.fetch.trace: -1
+#index.search.slowlog.threshold.fetch.warn: -1
+#index.search.slowlog.threshold.fetch.info: -1
+#index.search.slowlog.threshold.fetch.debug: -1
+#index.search.slowlog.threshold.fetch.trace: -1
 
-index.indexing.slowlog.threshold.index.warn: -1
-index.indexing.slowlog.threshold.index.info: -1
-index.indexing.slowlog.threshold.index.debug: -1
-index.indexing.slowlog.threshold.index.trace: -1
+#index.indexing.slowlog.threshold.index.warn: -1
+#index.indexing.slowlog.threshold.index.info: -1
+#index.indexing.slowlog.threshold.index.debug: -1
+#index.indexing.slowlog.threshold.index.trace: -1
 
 ################################## GC Logging ################################
 

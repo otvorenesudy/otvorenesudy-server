@@ -9,7 +9,8 @@
     pkg:
       - gcc
       - g++
-      - node
+      - nodejs
+      - npm
       - dirmngr
       - gnupg
       - libcurl4-openssl-dev

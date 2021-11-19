@@ -16,31 +16,10 @@
   apt:
     name:
       - libnginx-mod-http-passenger
-      - nginx-full
       - nginx-extras
     state: present
     force: yes
     update_cache: true
-
-- name: Check if /var/log/nginx is symlinked to /data
-  stat:
-    path: /var/log/nginx
-  register: st
-
-- name: Move and symlink /var/log/nginx to /data
-  shell: |
-    mv /var/log/nginx /data/var/log/nginx
-    ln -s /data/var/log/nginx /var/log/nginx
-  when: not st.stat.islnk
-  notify:
-    - Restart Nginx
-
-- name: Link Passenger module
-  file:
-    src: /usr/share/nginx/modules-available/mod-http-passenger.load
-    dest: /etc/nginx/modules-enabled/50-mod-http-passenger.conf
-    state: link
-    force: true
 
 - name: Copy Nginx's configuration
   copy: src=roles/passenger-nginx/templates/nginx.conf dest=/etc/nginx/nginx.conf
