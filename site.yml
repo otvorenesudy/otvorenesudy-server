@@ -7,8 +7,8 @@
     sysctl:
       kernel:
         # Webserver
-        shmmax: 16797818880 # 12GB of 24GB RAM in total
-        shmall: 4101030
+        shmmax: 8314667008
+        shmall: 2029948
 
         # Vagrant, uncomment for testing purposes
         # shmmax: 1050267648 # 1GB
