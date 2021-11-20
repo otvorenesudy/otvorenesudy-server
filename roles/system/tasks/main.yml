@@ -1,8 +1,3 @@
-- name: Add Ubuntu Bionic security repository
-  ansible.builtin.apt_repository:
-    repo: deb http://security.ubuntu.com/ubuntu bionic-security main
-    state: present
-
 - name: Upgrade all packages to the latest version
   apt:
     name: "*"
@@ -18,10 +13,7 @@
       - npm
       - dirmngr
       - gnupg
-      # NOTE: libssl-1.0-dev is important for ruby 2.3.8, if the ruby build fails, single out this package, install it on its own and install 2.3.8 manually via rbenv
-      - libssl1.0-dev
       - libcurl4-openssl-dev
-      - libssl-dev
       - chromium-chromedriver
     update_cache: yes
     state: latest

@@ -40,17 +40,17 @@
 - name: Create application configuration
   template: src=roles/passenger-nginx/templates/{{ item.src }} dest=/etc/nginx/sites-available/{{ item.dest }}
   with_items:
-    - { src: opencourts-api-production.j2, dest: opencourts-api-production }
-    - { src: opencourts-production.j2, dest: opencourts-production }
-    - { src: opencourts-prokuratura-production.j2, dest: opencourts-prokuratura-production }
+    - { src: otvorenesudy-api-production.j2, dest: otvorenesudy-api-production }
+    - { src: otvorenesudy-production.j2, dest: otvorenesudy-production }
+    - { src: otvorenesudy-prokuratura-production.j2, dest: otvorenesudy-prokuratura-production }
   notify:
     - Restart Nginx
 
 - name: Enable application configuration
   file: src=/etc/nginx/sites-available/{{ item }} dest=/etc/nginx/sites-enabled/{{ item }} state=link
   with_items:
-    - opencourts-api-production
-    - opencourts-production
-    - opencourts-prokuratura-production
+    - otvorenesudy-api-production
+    - otvorenesudy-production
+    - otvorenesudy-prokuratura-production
   notify:
     - Restart Nginx

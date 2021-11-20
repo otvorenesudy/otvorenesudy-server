@@ -1,4 +1,4 @@
-/home/deploy/projects/opencourts_production/shared/log/*.log {a
+/home/deploy/projects/otvorenesudy-production/shared/log/*.log {a
                                     su deploy deploy
                                     daily
                                     missingok
@@ -9,7 +9,7 @@
                                     copytruncate
 }
 
-/home/deploy/projects/opencourts-api-production/shared/log/*.log {
+/home/deploy/projects/otvorenesudy-api-production/shared/log/*.log {
                                     su deploy deploy
                                     daily
                                     missingok
@@ -20,7 +20,7 @@
                                     copytruncate
 }
 
-/home/deploy/projects/opencourts-prokuratura-production/shared/log/*.log {
+/home/deploy/projects/otvorenesudy-prokuratura-production/shared/log/*.log {
                                     su deploy deploy
                                     daily
                                     missingok

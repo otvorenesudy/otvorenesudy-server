@@ -19,6 +19,7 @@
       - postgresql-client-{{ version }}
       - libpq5
       - python3-psycopg2
+      - libpq-dev
     state: present
     force: yes
 

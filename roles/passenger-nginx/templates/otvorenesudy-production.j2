@@ -1,0 +1,58 @@
+server {
+  listen 12000;
+  server_name otvorenesudy.server.wbsprt.com 37.9.168.190;
+
+  passenger_enabled on;
+  rails_env production;
+  root /home/{{ user }}/projects/otvorenesudy-production/current/public;
+
+  access_log /var/log/nginx/otvorenesudy-access.log combined;
+  error_log  /var/log/nginx/otvorenesudy-error.log;
+  rewrite_log on;
+
+  error_page 500 502 503 504 /500.html;
+
+  location ~ ^/(assets)/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+}
+
+{#
+server {
+  listen 80;
+  server_name www.otvorenesudy.sk;
+  return 301 http://otvorenesudy.sk$request_uri;
+}
+
+server {
+  listen 80;
+  server_name otvorenesudy.sk otvorenesudy.sme.sk;
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen 443 ssl;
+  ssl_certificate /etc/letsencrypt/live/otvorenesudy.sk/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/otvorenesudy.sk/privkey.pem;
+
+  server_name otvorenesudy.sk otvorenesudy.sme.sk;
+
+  passenger_enabled on;
+  rails_env production;
+  root /home/{{ user }}/projects/otvorenesudy-production/current/public;
+
+  access_log /var/log/nginx/otvorenesudy-access.log combined;
+  error_log  /var/log/nginx/otvorenesudy-error.log;
+  rewrite_log on;
+
+  error_page 500 502 503 504 /500.html;
+
+  location ~ ^/(assets)/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
+}
+#}

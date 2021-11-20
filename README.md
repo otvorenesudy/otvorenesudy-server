@@ -30,7 +30,7 @@ Run provision.
 ansible-playbook -i hosts site.yml
 ```
 
-**Note**: *You'll need the root password here, as the root is used as a users to setup up the server.*
+**Note**: *You'll need the root password here or have your public key in .ssh/authorized_keys under root, as the root is used as a users to setup up the server.*
 
 ## Contributing
 
