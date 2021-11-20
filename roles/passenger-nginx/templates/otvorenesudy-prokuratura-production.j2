@@ -1,6 +1,23 @@
 server {
   listen 12002;
+
   server_name otvorenesudy.server.wbsprt.com 37.9.168.190;
+
+  passenger_enabled on;
+  rails_env production;
+  root /home/{{ user }}/projects/otvorenesudy-prokuratura-production/current/public;
+
+  access_log /var/log/nginx/otvorenesudy-prokuratura-access.log combined;
+  error_log  /var/log/nginx/otvorenesudy-prokuratura-error.log;
+  rewrite_log on;
+
+  error_page 500 502 503 504 /500.html;
+
+  location ~ ^/(assets)/ {
+    gzip_static on;
+    expires max;
+    add_header Cache-Control public;
+  }
 }
 
 {#

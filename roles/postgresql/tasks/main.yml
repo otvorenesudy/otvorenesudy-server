@@ -27,6 +27,7 @@
   template: src=roles/postgresql/templates/{{ item.src }} dest=/etc/postgresql/{{ version }}/main/{{ item.dest }}
   with_items:
     - { src: postgresql.conf.j2, dest: postgresql.conf }
+    - { src: pg_hba.conf.j2, dest: pg_hba.conf }
   notify:
     - Restart PostgreSQL
 
