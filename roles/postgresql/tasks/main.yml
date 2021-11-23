@@ -23,7 +23,7 @@
     state: present
     force: yes
 
-- name: Copy configuration_files
+- name: Copy configuration files
   template: src=roles/postgresql/templates/{{ item.src }} dest=/etc/postgresql/{{ version }}/main/{{ item.dest }}
   with_items:
     - { src: postgresql.conf.j2, dest: postgresql.conf }
