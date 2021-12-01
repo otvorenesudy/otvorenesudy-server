@@ -28,7 +28,6 @@
            - otvorenesudy.sk
            - api.otvorenesudy.sk
            - prokuratura.otvorenesudy.sk
-           - otvorenesudy.sme.sk
     certbot_create_standalone_stop_services:
       - nginx
     certbot_install_from_source: false
@@ -56,5 +55,5 @@
     - { role: elasticsearch, version: 1.7.6, tags: elasticsearch }
     - { role: redis, tags: redis }
     - { role: memcached, tags: memcached }
-    # - { role: letsencrypt, tags: [letsencrypt] }
+    - { role: letsencrypt, tags: [letsencrypt] }
     - { role: apps, tags: apps }

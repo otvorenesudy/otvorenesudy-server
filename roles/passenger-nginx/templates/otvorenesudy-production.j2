@@ -6,7 +6,7 @@ server {
 
 server {
   listen 80;
-  server_name otvorenesudy.sk otvorenesudy.sme.sk;
+  server_name otvorenesudy.sk;
   return 301 https://$host$request_uri;
 }
 
@@ -15,7 +15,7 @@ server {
   ssl_certificate /etc/letsencrypt/live/otvorenesudy.sk/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/otvorenesudy.sk/privkey.pem;
 
-  server_name otvorenesudy.sk otvorenesudy.sme.sk;
+  server_name otvorenesudy.sk;
 
   passenger_enabled on;
   rails_env production;
