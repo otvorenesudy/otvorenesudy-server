@@ -1,27 +1,4 @@
 server {
-  listen 12001;
-
-  server_name otvorenesudy.server.wbsprt.com 37.9.168.190;
-
-  passenger_enabled on;
-  rails_env production;
-  root /home/{{ user }}/projects/otvorenesudy-api-production/current/public;
-
-  access_log /var/log/nginx/otvorenesudy-api-access.log combined;
-  error_log  /var/log/nginx/otvorenesudy-api-error.log;
-  rewrite_log on;
-
-  error_page 500 502 503 504 /500.html;
-
-  location ~ ^/(assets)/ {
-    gzip_static on;
-    expires max;
-    add_header Cache-Control public;
-  }
-}
-
-{#
-server {
   listen 80;
   server_name api.otvorenesudy.sk;
   return 301 https://$host$request_uri;
@@ -50,4 +27,3 @@ server {
     add_header Cache-Control public;
   }
 }
-#}
