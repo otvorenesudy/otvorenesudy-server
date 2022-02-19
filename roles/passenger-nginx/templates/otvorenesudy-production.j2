@@ -1,6 +1,12 @@
 server {
   listen 80;
-  server_name prokuratura.otvorenesudy.sk;
+  server_name www.otvorenesudy.sk;
+  return 301 http://otvorenesudy.sk$request_uri;
+}
+
+server {
+  listen 80;
+  server_name otvorenesudy.sk;
   return 301 https://$host$request_uri;
 }
 
@@ -9,14 +15,14 @@ server {
   ssl_certificate /etc/letsencrypt/live/otvorenesudy.sk/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/otvorenesudy.sk/privkey.pem;
 
-  server_name prokuratura.otvorenesudy.sk;
+  server_name otvorenesudy.sk;
 
   passenger_enabled on;
   rails_env production;
-  root /home/{{ user }}/projects/opencourts-prokuratura-production/current/public;
+  root /home/{{ user }}/projects/otvorenesudy-production/current/public;
 
-  access_log /var/log/nginx/opencourts-prokuratura-access.log combined;
-  error_log  /var/log/nginx/opencourts-prokuratura-error.log;
+  access_log /var/log/nginx/otvorenesudy-access.log combined;
+  error_log  /var/log/nginx/otvorenesudy-error.log;
   rewrite_log on;
 
   error_page 500 502 503 504 /500.html;

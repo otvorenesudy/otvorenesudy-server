@@ -7,8 +7,8 @@
     sysctl:
       kernel:
         # Webserver
-        shmmax: 16797818880 # 12GB of 24GB RAM in total
-        shmall: 4101030
+        shmmax: 8314667008
+        shmall: 2029948
 
         # Vagrant, uncomment for testing purposes
         # shmmax: 1050267648 # 1GB
@@ -28,7 +28,6 @@
            - otvorenesudy.sk
            - api.otvorenesudy.sk
            - prokuratura.otvorenesudy.sk
-           - otvorenesudy.sme.sk
     certbot_create_standalone_stop_services:
       - nginx
     certbot_install_from_source: false
@@ -37,7 +36,7 @@
     certbot_create_command: "{{ certbot_script }} certonly --standalone --noninteractive --agree-tos --email {{ cert_item.email }} -d {{ cert_item.domains | join(',') }}"
 
   roles:
-    - { role: system, tags: [system] }
+    - { role: system, tags: system }
     - { role: user, github_ssh_keys: [smolnar, pavolzbell] }
     - { role: sysctl }
     - { role: iptables }
@@ -48,12 +47,13 @@
           { version: 2.3.8, bundler: 1.17.3 },
           { version: 2.5.0, bundler: 1.17.3 },
           { version: 2.7.1, bundler: 2.1.4 }
-        ]
+        ],
+        tags: ruby
       }
-    - { role: postgresql, version: 11, users: [opencourts, opencourts_api, opencourts_prokuratura] }
+    - { role: postgresql, version: 11, users: [opencourts, opencourts_api, opencourts_prokuratura], tags: postgresql }
     - { role: passenger-nginx, tags: nginx }
     - { role: elasticsearch, version: 1.7.6, tags: elasticsearch }
     - { role: redis, tags: redis }
-    - { role: memcached }
+    - { role: memcached, tags: memcached }
     - { role: letsencrypt, tags: [letsencrypt] }
-    - { role: apps, tags: [apps] }
+    - { role: apps, tags: apps }

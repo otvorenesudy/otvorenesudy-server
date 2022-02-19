@@ -5,6 +5,7 @@
       - git-core
       - build-essential
       - libreadline-dev
+      - libssl1.0-dev
       - libssl-dev
       - libyaml-dev
       - libxml2-dev
@@ -18,6 +19,7 @@
   register: st
 
 - name: Install rbenv
+  become_user: '{{ user }}'
   git:
     repo: https://github.com/sstephenson/rbenv.git
     dest: /home/{{ user }}/.rbenv
@@ -29,6 +31,7 @@
   register: st
 
 - name: Install ruby-build plugin
+  become_user: '{{ user }}'
   git:
     repo: https://github.com/sstephenson/ruby-build.git
     dest: /home/{{ user }}/.rbenv/plugins/ruby-build
@@ -63,17 +66,33 @@
     line: eval "$(rbenv init -)"
     state: present
 
-- name: Detect installed ruby versions
-  command: sudo -iu {{ user }} rbenv versions
-  register: rbenv_versions_output
+- name: Add Ubuntu Bionic security repository
+  ansible.builtin.apt_repository:
+    repo: deb http://security.ubuntu.com/ubuntu bionic-security main
+    state: present
 
-- name: Install ruby version
-  command: sudo -iu {{ user }} rbenv install {{ item.version }}
-  when: item.version not in rbenv_versions_output.stdout
+- name: Install OpenSSL 1.0 development dependencies to build Ruby 2.3.8
+  apt:
+    name:
+      - libssl1.0-dev
+    state: present
+
+- name: Install Ruby 2.3.8
+  command: sudo -iu {{ user }} rbenv install --skip-existing {{ rubies.0.version }}
+
+- name: Install newest OpenSSL development dependencies
+  apt:
+    name:
+      - libssl-dev
+      - libcurl4-openssl-dev
+    state: present
+
+- name: Install all other Ruby versions
+  command: sudo -iu {{ user }} rbenv install --skip-existing {{ item.version }}
   with_items: '{{ rubies }}'
 
 - name: Set initial ruby
-  command: sudo -iu {{ user }} rbenv global {{ rubies.0.version }}
+  command: sudo -iu {{ user }} rbenv global {{ rubies.1.version }}
   become_user: '{{ user }}'
 
 - name: Install bundler

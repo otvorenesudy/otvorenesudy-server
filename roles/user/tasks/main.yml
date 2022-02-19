@@ -4,6 +4,14 @@
 - name: Create application user
   user: name={{ user }} group=deploy shell=/bin/bash state=present
 
+- name: Allow 'deploy' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%deploy'
+    line: '%deploy ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
 - name: Cleanup old keys
   file: path=/tmp/*.authorized_keys state=absent
 
