@@ -4,13 +4,15 @@
     state: latest
     update_cache: yes
 
+- name: Install Node deb repositories
+  shell: curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+
 - name: Install a list of packages
   apt:
     pkg:
       - gcc
       - g++
       - nodejs
-      - npm
       - dirmngr
       - gnupg
       - libcurl4-openssl-dev
