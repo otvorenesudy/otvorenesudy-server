@@ -4,18 +4,13 @@
     state: latest
     update_cache: yes
 
-- name: Install latest Node repositories
-  apt_repository:
-    repo: "deb https://deb.nodesource.com/node_17.x {{ ansible_distribution_release }} main"
-    state: present
-    update_cache: yes
-
 - name: Install a list of packages
   apt:
     pkg:
       - gcc
       - g++
       - nodejs
+      - npm
       - dirmngr
       - gnupg
       - libcurl4-openssl-dev
