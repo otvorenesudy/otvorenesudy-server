@@ -36,7 +36,7 @@
   lineinfile:
     dest: /etc/default/elasticsearch
     regexp: ^#?ES_JAVA_OPTS=.*
-    line: ES_JAVA_OPTS="-Xms8g -Xmx8g"
+    line: ES_JAVA_OPTS="-Xms4g -Xmx4g"
   notify:
     - Restart Elasticsearch
 
@@ -63,9 +63,3 @@
     line: "* soft memlock unlimited"
   notify:
     - Restart Elasticsearch
-
-#- name: Set CRON job to restart Elasticsearch regularly
-  #cron:
-   #name: 'Restart Elasticsearch regularly'
-   #hour: "6"
-#   job: /bin/systemctl restart elasticsearch

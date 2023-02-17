@@ -4,7 +4,7 @@
 - name: Run self-recovery script
   cron:
     name: 'Trigger self-recovery check'
-    minute: "*/30"
+    minute: "*/5"
     job: /bin/bash /root/self-recovery.sh >> /root/self-recovery.log
 
 - name: Copy Sidekiq restart script
