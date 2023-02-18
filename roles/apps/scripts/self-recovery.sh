@@ -4,7 +4,6 @@ array=(
   "https://otvorenesudy.sk"
   "https://otvorenesudy.sk/decrees"
   "https://api.otvorenesudy.sk"
-  "https://api.otvorenesudy.sk"
   "https://prokuratura.otvorenesudy.sk"
   "https://prokuratura.otvorenesudy.sk/criminality?l=sk"
   "https://prokuratura.otvorenesudy.sk/criminality?l=en"
@@ -19,6 +18,9 @@ do
       /bin/systemctl restart memcached
       /bin/systemctl restart redis-server
       /bin/systemctl restart nginx
+      /bin/systemctl restart elasticsearch
+
+      exit 0
     fi
 done
 
