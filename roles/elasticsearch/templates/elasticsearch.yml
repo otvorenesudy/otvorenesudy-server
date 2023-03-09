@@ -160,7 +160,7 @@
 
 # Path to log files:
 #
-path.logs: /data/var/log/elasticsearch
+path.logs: /var/log/elasticsearch
 
 # Path to where plugins are installed:
 #

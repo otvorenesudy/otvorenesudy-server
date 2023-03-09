@@ -1,4 +1,4 @@
-/home/deploy/projects/otvorenesudy-production/shared/log/*.log {a
+/home/deploy/projects/otvorenesudy-production/shared/log/*.log {
                                     su deploy deploy
                                     daily
                                     missingok
