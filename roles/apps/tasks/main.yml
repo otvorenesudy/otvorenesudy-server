@@ -5,6 +5,7 @@
   cron:
     name: "Trigger self-recovery check"
     minute: "*/10"
+    hour: "6-23"
     job: /bin/bash /root/self-recovery.sh >> /root/self-recovery.log
 
 - name: Copy Sidekiq restart script
@@ -16,3 +17,13 @@
     hour: "*/12"
     user: deploy
     job: /bin/bash /home/deploy/sidekiq.sh >> /home/deploy/sidekiq.log
+
+- name: Copy db-backup script
+  copy: src=roles/apps/scripts/db-backup.sh dest=/root/
+
+- name: Run db-backup script
+  cron:
+    name: "Trigger db-backup script"
+    minute: "30"
+    hour: "*/23"
+    job: /bin/bash /root/db-backup.sh >> /root/db-backup.log
