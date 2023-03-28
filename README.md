@@ -25,12 +25,17 @@ Make sure, that you use correct `sysctl.kernel` attributes in `site.yml`. If you
 
 Run provision.
 
-
 ```
 ansible-playbook -i hosts site.yml
 ```
 
-**Note**: *You'll need the root password here or have your public key in .ssh/authorized_keys under root, as the root is used as a users to setup up the server.*
+**Note**: _You'll need the root password here or have your public key in .ssh/authorized_keys under root, as the root is used as a users to setup up the server._
+
+Install monitoring as root by Netdata
+
+```
+wget -O /tmp/netdata-kickstart.sh https://my-netdata.io/kickstart.sh && sh /tmp/netdata-kickstart.sh --nightly-channel --claim-token CLAIM_TOKEN --claim-url https://app.netdata.cloud
+```
 
 ## Contributing
 

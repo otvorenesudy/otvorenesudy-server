@@ -1,12 +1,15 @@
 #!/bin/bash
 
+pkill -f chromium-browser
+pkill -f chrome
+curl --max-time 15 -s -o /dev/null "https://prokuratura.otvorenesudy.sk/criminality?l=sk"
+curl --max-time 15 -s -o /dev/null "https://prokuratura.otvorenesudy.sk/criminality?l=en"
+
 array=(
   "https://otvorenesudy.sk"
   "https://otvorenesudy.sk/decrees"
   "https://api.otvorenesudy.sk"
   "https://prokuratura.otvorenesudy.sk"
-  "https://prokuratura.otvorenesudy.sk/criminality?l=sk"
-  "https://prokuratura.otvorenesudy.sk/criminality?l=en"
 )
 
 for url in "${array[@]}"
@@ -20,6 +23,7 @@ do
       /bin/systemctl restart nginx
       /bin/systemctl restart elasticsearch
 
+      echo "self-recovery # Url [$url] returned [$status] status" | ts
       exit 0
     fi
 done
@@ -27,6 +31,7 @@ done
 status=$(curl --max-time 15 -s -o /dev/null -w '%{http_code}\n' "http://localhost:9200/decrees_production/_search")
 
 if [[ $status -ne 200 ]]; then
+  echo "self-recovery # Elasticsearch timed out with [$status] status" | ts
   /bin/systemctl restart elasticsearch
 fi
 

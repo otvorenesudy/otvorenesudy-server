@@ -28,7 +28,7 @@
   lineinfile:
     dest: /etc/default/elasticsearch
     regexp: ^#?ES_HEAP_SIZE=.*
-    line: ES_HEAP_SIZE=2g
+    line: ES_HEAP_SIZE=1g
   notify:
     - Restart Elasticsearch
 
@@ -36,7 +36,7 @@
   lineinfile:
     dest: /etc/default/elasticsearch
     regexp: ^#?ES_JAVA_OPTS=.*
-    line: ES_JAVA_OPTS="-Xms4g -Xmx4g"
+    line: ES_JAVA_OPTS="-Xms2g -Xmx2g"
   notify:
     - Restart Elasticsearch
 

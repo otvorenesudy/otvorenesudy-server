@@ -11,4 +11,4 @@ $HOME/.rbenv/bin/rbenv exec bundle exec sidekiq --index 0 --pidfile /home/deploy
 
 cd /home/deploy/projects/otvorenesudy-prokuratura-production/current
 $HOME/.rbenv/bin/rbenv exec bundle exec sidekiqctl stop /home/deploy/projects/otvorenesudy-p,arokuratura-production/shared/tmp/pids/sidekiq-0.pid 10
-$HOME/.rbenv/bin/rbenv exec bundle exec sidekiq --index 0 --pidfile /home/deploy/proje.q,acts/otvorenesudy-prokuratura-production/shared/tmp/pids/sidekiq-0.pid --environment production --logfile /home/deploy/projects/otvorenesudy-prokuratura-production/shared/log/sidekiq.log --daemon
+$HOME/.rbenv/bin/rbenv exec bundle exec sidekiq --index 0 --pidfile /home/deploy/projects/otvorenesudy-prokuratura-production/shared/tmp/pids/sidekiq-0.pid --environment production --logfile /home/deploy/projects/otvorenesudy-prokuratura-production/shared/log/sidekiq.log --daemon
