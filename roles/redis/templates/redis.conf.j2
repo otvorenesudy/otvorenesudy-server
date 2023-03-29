@@ -363,8 +363,8 @@ slave-priority 100
 # In short... if you have slaves attached it is suggested that you set a lower
 # limit for maxmemory so that there is some free RAM on the system for slave
 # output buffers (but this is not needed if the policy is 'noeviction').
-#
-# maxmemory <bytes>
+
+maxmemory 2gb
 
 # MAXMEMORY POLICY: how Redis will select what to remove when maxmemory
 # is reached. You can select among five behaviors:
@@ -387,7 +387,7 @@ slave-priority 100
 #
 # The default is:
 #
-# maxmemory-policy volatile-lru
+maxmemory-policy volatile-lru
 
 # LRU and minimal TTL algorithms are not precise algorithms but approximated
 # algorithms (in order to save memory), so you can select as well the sample
