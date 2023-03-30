@@ -7,6 +7,15 @@
     minute: "*/10"
     job: /bin/bash /root/self-recovery.sh 2>> /root/self-recovery.log
 
+- name: Copy elasticsearch-check script
+  copy: src=roles/apps/scripts/elasticsearch-check.sh dest=/root/
+
+- name: Run elasticsearch-check script
+  cron:
+    name: "Trigger elasticsearch-check check"
+    minute: "*/1"
+    job: /bin/bash /root/elasticsearch-check.sh 2>> /root/elasticsearch-check.log
+
 - name: Copy Sidekiq restart script
   copy: src=roles/apps/scripts/sidekiq.sh dest=/home/deploy
 
