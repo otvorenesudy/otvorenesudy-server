@@ -19,6 +19,7 @@
       - chromium-chromedriver
       - python3-certbot-nginx
       - moreutils
+      - ntp
     update_cache: yes
     state: latest
     force: true

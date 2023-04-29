@@ -3,7 +3,7 @@
 
 - name: Run self-recovery script
   cron:
-    name: "Trigger self-recovery check"
+    name: "Run self-recovery check"
     minute: "*/10"
     job: /bin/bash /root/self-recovery.sh 2>> /root/self-recovery.log
 
@@ -12,14 +12,14 @@
 
 - name: Run elasticsearch-check script
   cron:
-    name: "Trigger elasticsearch-check check"
-    minute: "*/1"
+    name: "Run elasticsearch-check check"
+    minute: "*/10"
     job: /bin/bash /root/elasticsearch-check.sh 2>> /root/elasticsearch-check.log
 
 - name: Copy Sidekiq restart script
   copy: src=roles/apps/scripts/sidekiq.sh dest=/home/deploy
 
-- name: Trigger Sidekiq restart script
+- name: Run Sidekiq restart script
   cron:
     name: "Restart Sidekiq"
     hour: "*/24"
@@ -31,7 +31,13 @@
 
 - name: Run db-backup script
   cron:
-    name: "Trigger db-backup script"
+    name: "Run db-backup script"
     minute: "30"
     hour: "*/23"
     job: /bin/bash /root/db-backup.sh >> /root/db-backup.log
+
+- name: Run system backup [1]
+  cron:
+    name: "Run system backup [1]"
+    minute: "*/10"
+    job: rsync -aAXv / --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} /mnt/sdd/ &> system-backup-sdd.log
