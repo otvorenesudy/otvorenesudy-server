@@ -39,5 +39,5 @@
 - name: Run system backup [1]
   cron:
     name: "Run system backup [1]"
-    minute: "*/10"
+    minute: 0
     job: rsync -aAXv / --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} /mnt/sdd/ &> system-backup-sdd.log
