@@ -9,7 +9,7 @@ MAX_BACKUPS=5
 mkdir -p $BACKUP_DIR
 
 # run pg_dump and save to backup file with timestamp
-sudo -u postgres pg_dumpall > tar -czvf $BACKUP_DIR/db-backup-$TIMESTAMP.tar.gz
+sudo -u postgres pg_dumpall | gzip > $BACKUP_DIR/db-backup-$TIMESTAMP.gz
 
 # remove old backups if there are more than MAX_BACKUPS
 cd $BACKUP_DIR
