@@ -20,6 +20,7 @@
       - python3-certbot-nginx
       - moreutils
       - ntp
+      - unoconv
     update_cache: yes
     state: latest
     force: true
