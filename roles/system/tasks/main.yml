@@ -27,3 +27,26 @@
 
 - name: Install yarn
   command: npm install --global yarn
+
+- name: Create sda mounting point
+  ansible.builtin.file:
+    path: /mnt/sda
+    state: directory
+    mode: "0755"
+
+- name: Create sdb mounting point
+  ansible.builtin.file:
+    path: /mnt/sdb
+    state: directory
+    mode: "0755"
+
+- name: Create sdc mounting point
+  ansible.builtin.file:
+    path: /mnt/sdd
+    state: directory
+    mode: "0755"
+
+- name: Copy /etc/fstab
+  template: src=roles/system/templates/fstab dest=/etc/fstab
+  notify:
+    - Reload Mount All

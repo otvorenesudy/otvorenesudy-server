@@ -1,0 +1,4 @@
+---
+- name: Reload Mount All
+  command: mount -a
+  become: true

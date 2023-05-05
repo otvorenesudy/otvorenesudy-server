@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # set variables
-BACKUP_DIR=/root/db-backups
+BACKUP_DIR=/dev/sda/backups
+SECONDARY_BACKUP_DIR=/dev/sdb/backups
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 MAX_BACKUPS=5
 
@@ -10,6 +11,7 @@ mkdir -p $BACKUP_DIR
 
 # run pg_dump and save to backup file with timestamp
 sudo -u postgres pg_dumpall | gzip > $BACKUP_DIR/db-backup-$TIMESTAMP.gz
+cp $BACKUP_DIR/db-backup-$TIMESTAMP.gz $SECONDARY_BACKUP_DIR/db-backup-$TIMESTAMP.gz
 
 # remove old backups if there are more than MAX_BACKUPS
 cd $BACKUP_DIR
