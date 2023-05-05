@@ -4,7 +4,7 @@
 BACKUP_DIR=/dev/sda/backups
 SECONDARY_BACKUP_DIR=/dev/sdb/backups
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
-MAX_BACKUPS=5
+MAX_BACKUPS=20
 
 # create backup directory if it doesn't exist
 mkdir -p $BACKUP_DIR
