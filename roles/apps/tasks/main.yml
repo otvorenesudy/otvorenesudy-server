@@ -33,7 +33,7 @@
   cron:
     name: "Run db-backup script"
     minute: "30"
-    hour: "*/23"
+    hour: "23"
     job: /bin/bash /root/db-backup.sh >> /root/db-backup.log
 
 - name: Run system backup [1]
