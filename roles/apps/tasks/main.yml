@@ -41,3 +41,12 @@
     name: "Run system backup [1]"
     minute: "*/10"
     job: rsync -aAXv --delete --exclude=/dev --exclude=/proc --exclude=/sys --exclude=/tmp --exclude=/run --exclude=/mnt --exclude=/media --exclude=/lost+found / /mnt/sdd &> system-backup-sdd.log
+
+- name: Copy unoconv-server script
+  copy: src=roles/apps/scripts/unoconv-server.sh dest=/root/
+
+- name: Run unoconv-server script
+  cron:
+    name: "Run unoconv-server script"
+    minute: "*/10"
+    job: /bin/bash /root/unoconv-server.sh >> /root/unoconv-server.log
