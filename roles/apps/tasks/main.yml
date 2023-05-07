@@ -16,15 +16,15 @@
     minute: "*/10"
     job: /bin/bash /root/elasticsearch-check.sh 2>> /root/elasticsearch-check.log
 
-- name: Copy Sidekiq restart script
-  copy: src=roles/apps/scripts/sidekiq.sh dest=/home/deploy
+- name: Copy workers restart script
+  copy: src=roles/apps/scripts/workers.sh dest=/home/deploy
 
-- name: Run Sidekiq restart script
+- name: Run workers restart script
   cron:
-    name: "Restart Sidekiq"
+    name: "Restart workers"
     hour: "*/24"
     user: deploy
-    job: /bin/bash /home/deploy/sidekiq.sh 2>> /home/deploy/sidekiq.log
+    job: /bin/bash /home/deploy/workers.sh 2>> /home/deploy/workers.log
 
 - name: Copy db-backup script
   copy: src=roles/apps/scripts/db-backup.sh dest=/root/
