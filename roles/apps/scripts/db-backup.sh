@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # set variables
-BACKUP_DIR=/dev/sda/backups
-SECONDARY_BACKUP_DIR=/dev/sdb/backups
+BACKUP_DIR=/mnt/sda/backups
+SECONDARY_BACKUP_DIR=/mnt/sdb/backups
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 MAX_BACKUPS=20
 
@@ -15,11 +15,14 @@ cp $BACKUP_DIR/db-backup-$TIMESTAMP.gz $SECONDARY_BACKUP_DIR/db-backup-$TIMESTAM
 
 # remove old backups if there are more than MAX_BACKUPS
 cd $BACKUP_DIR
-BACKUP_FILES=($(ls -t db-backup-*.tar.gz))
+BACKUP_FILES=($(ls -t .))
 NUM_BACKUPS=${#BACKUP_FILES[@]}
 if [ $NUM_BACKUPS -gt $MAX_BACKUPS ]; then
-  REMOVE_BACKUPS=$((NUM_BACKUPS - MAX_BACKUPS))
-  for (( i=0; i<$REMOVE_BACKUPS; i++ )); do
+  START=$((MAX_BACKUPS + 1))
+  for (( i=$START; i<$NUM_BACKUPS; i++ )); do
     rm ${BACKUP_FILES[$i]}
   done
 fi
+
+# sync secondary backup directory
+rsync -aAXv --delete $BACKUP_DIR/ $SECONDARY_BACKUP_DIR

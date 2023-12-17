@@ -23,8 +23,8 @@
   cron:
     name: "Restart workers"
     hour: "*/24"
-    user: deploy
     job: /bin/bash /home/deploy/workers.sh 2>> /home/deploy/workers.log
+  become_user: "{{ user }}"
 
 - name: Copy db-backup script
   copy: src=roles/apps/scripts/db-backup.sh dest=/root/
