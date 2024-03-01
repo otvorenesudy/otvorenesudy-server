@@ -53,7 +53,7 @@
       }
     - {
         role: postgresql,
-        version: 11,
+        version: 16,
         users: [opencourts, opencourts_api, opencourts_prokuratura],
         tags: postgresql,
       }
