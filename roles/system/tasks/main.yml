@@ -37,12 +37,16 @@
       - dirmngr
       - gnupg
       - nodejs
+      - libcurl4
+      - libcurl4
       - libcurl4-openssl-dev
       - chromium-chromedriver
       - python3-certbot-nginx
       - moreutils
       - ntp
       - unoconv
+      - libpq-dev
+      - libssl-dev
     update_cache: yes
     state: latest
     force: true

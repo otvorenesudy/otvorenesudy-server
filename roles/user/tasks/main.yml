@@ -38,12 +38,37 @@
     insertbefore: BOF
     state: present
 
-- name: Copy the public keys from Github
+- name: Copy the public keys from GitHub
   delegate_to: 127.0.0.1
-  become: no
+  become: false
   get_url: url=https://github.com/{{item}}.keys dest=/tmp/{{item}}.authorized_keys
   with_items: '{{ github_ssh_keys }}'
 
 - name: Install public keys
   authorized_key: user={{ user }} key={{ lookup('file', '/tmp/' + item + '.authorized_keys') }}
   with_items: '{{ github_ssh_keys }}'
+
+- name: Create key for GitHub Actions
+  become_user: '{{ user }}'
+  openssh_keypair:
+    path: "~/.ssh/github-actions"
+    type: rsa
+    size: 4096
+    state: present
+    force: no
+
+- name: Print Github Actions public key
+  become_user: '{{ user }}'
+  command: cat ~/.ssh/github-actions.pub
+  register: public_key
+  changed_when: false
+
+- name: Authorize GitHub Actions key
+  become_user: '{{ user }}'
+  authorized_key:
+    user: '{{ user }}'
+    state: present
+    key: "{{ public_key.stdout }}"
+   
+
+
