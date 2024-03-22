@@ -23,9 +23,9 @@
 
 - name: Add NODE_OPTIONS to environment variables
   lineinfile:
-    dest: "~/.exports"
-    regexp: "^export NODE_OPTIONS="
-    line: "export NODE_OPTIONS=--openssl-legacy-provider"
+    dest: "~/.env"
+    regexp: "^NODE_OPTIONS="
+    line: "NODE_OPTIONS=--openssl-legacy-provider"
     state: present
   become_user: "{{ user }}"
 

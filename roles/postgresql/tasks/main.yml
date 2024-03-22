@@ -44,9 +44,9 @@
 - name: Export PostgreSQL user names as ENV variables
   become_user: "{{ user }}"
   lineinfile:
-    dest: ~/.exports
-    regexp: ^export {{ item | upper }}_DATABASE_USER=
-    line: export {{ item | upper }}_DATABASE_USER={{ item }}
+    dest: ~/.env
+    regexp: '^{{ item | upper }}_DATABASE_USER='
+    line: '{{ item | upper }}_DATABASE_USER={{ item }}'
     state: present
   with_items: "{{ users }}"
   when: users|length > 0
@@ -54,9 +54,9 @@
 - name: Export PostgreSQL user passwords as ENV variables
   become_user: "{{ user }}"
   lineinfile:
-    dest: ~/.exports
-    regexp: ^export {{ item | upper }}_DATABASE_PASSWORD=
-    line: export {{ item | upper }}_DATABASE_PASSWORD="{{ lookup('file', '/tmp/' + item + '.pgpassword') }}"
+    dest: ~/.env
+    regexp: "^{{ item | upper }}_DATABASE_PASSWORD="
+    line: "{{ item | upper }}_DATABASE_PASSWORD={{ lookup('file', '/tmp/' + item + '.pgpassword') }}"
     state: present
   with_items: "{{ users }}"
   when: users|length > 0

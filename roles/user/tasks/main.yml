@@ -15,26 +15,27 @@
 - name: Cleanup old keys
   file: path=/tmp/*.authorized_keys state=absent
 
-- name: Setup exports file
+- name: Setup global env file
   become_user: '{{ user }}'
   file:
-    path: ~/.exports
+    path: ~/.env
     state: touch
     group: deploy
     mode: 0644
 
-- name: Load exports file in .profile
+- name: Load env file in .profile
   become_user: '{{ user }}'
   lineinfile:
     dest: ~/.profile
-    line: source ~/.exports
+    line: "export $(cat /home/{{ user }}/.env | xargs)"
+    insertbefore: EOF
     state: present
 
-- name: Load exports file in .bashrc
+- name: Load global env file in .bashrc
   become_user: '{{ user }}'
   lineinfile:
     dest: ~/.bashrc
-    line: source ~/.exports
+    line: export $(cat /home/{{ user }}/.env | xargs)
     insertbefore: BOF
     state: present
 
