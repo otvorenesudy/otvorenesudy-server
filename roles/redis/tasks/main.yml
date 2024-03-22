@@ -7,17 +7,38 @@
     state: present
     force: yes
 
-- name: Add Chris Lea's PPA for Redis
-  apt_repository: repo=ppa:chris-lea/redis-server state=present update_cache=true
+- name: Add official Redis repository
+  shell: |
+    curl -fsSL https://packages.redis.io/gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+    rm /etc/apt/sources.list.d/redis.list
+    echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+    apt-get update
 
 - name: Install Redis
   apt:
     name:
       - redis-server
+      - redis
     state: present
     force: yes
 
 - name: Copy configuration file
   template: src=roles/redis/templates/redis.conf.j2 dest=/etc/redis/redis.conf
+  notify:
+    - Restart Redis
+
+- name: Setup systemd service type
+  lineinfile:
+    dest: /lib/systemd/system/redis-server.service
+    regexp: ^Type=*
+    line: Type=simple # This required for Redis to work properly with systemd
+  notify:
+    - Restart Redis
+
+- name: Setup systemd service restart
+  lineinfile:
+    dest: /lib/systemd/system/redis-server.service
+    regexp: ^Restart=*
+    line: Restart=on-failure # This required for Redis to work properly with systemd
   notify:
     - Restart Redis
