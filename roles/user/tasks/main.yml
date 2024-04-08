@@ -69,4 +69,16 @@
     state: present
   with_items: '{{ repositories }}'
 
+- name: Read GitHub Actions public keys
+  slurp:
+    src: /home/{{ user }}/.ssh/github-actions-{{ item }}.pub
+  register: github_action_public_keys
+  with_items: '{{ repositories }}'
+
+- name: Add GitHub Actions public keys into Known Hosts
+  authorized_key:
+    user: '{{ user }}'
+    key: "{{ item.content | b64decode }}"
+  with_items: "{{ github_action_public_keys.results }}"
+
 
