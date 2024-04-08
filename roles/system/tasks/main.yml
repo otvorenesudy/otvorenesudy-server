@@ -41,6 +41,8 @@
       - libcurl4
       - libcurl4-openssl-dev
       - chromium-chromedriver
+      - python3
+      - python3-pip
       - python3-certbot-nginx
       - moreutils
       - ntp

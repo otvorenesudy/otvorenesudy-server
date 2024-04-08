@@ -37,7 +37,7 @@
 
   roles:
     - { role: system, tags: system }
-    - { role: user, github_ssh_keys: [smolnar, pavolzbell], tags: [user] }
+    - { role: user, github_ssh_keys: [smolnar, pavolzbell], repositories: [otvorenesudy, otvorenesudy-api, otvorenesudy-prokuratura], tags: [user] }
     - { role: sysctl }
     - { role: iptables }
     - { role: logrotate }
