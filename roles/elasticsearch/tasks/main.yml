@@ -35,7 +35,7 @@
   lineinfile:
     dest: /etc/default/elasticsearch
     regexp: ^#?ES_JAVA_OPTS=.*
-    line: ES_JAVA_OPTS="-Xms6g -Xmx6g"
+    line: ES_JAVA_OPTS="-Xms3g -Xmx6g"
   notify:
     - Restart Elasticsearch
 

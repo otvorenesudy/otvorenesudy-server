@@ -341,30 +341,30 @@ path.logs: /var/log/elasticsearch
 
 # Shard level query and fetch threshold logging.
 
-index.search.slowlog.threshold.query.warn: 10s
-index.search.slowlog.threshold.query.info: 5s
-index.search.slowlog.threshold.query.debug: 2s
-index.search.slowlog.threshold.query.trace: 500ms
+# index.search.slowlog.threshold.query.warn: 10s
+# index.search.slowlog.threshold.query.info: 5s
+# index.search.slowlog.threshold.query.debug: 3s
+# index.search.slowlog.threshold.query.trace: 2s
 
-index.search.slowlog.threshold.fetch.warn: 1s
-index.search.slowlog.threshold.fetch.info: 800ms
-index.search.slowlog.threshold.fetch.debug: 500ms
-index.search.slowlog.threshold.fetch.trace: 200ms
+# index.search.slowlog.threshold.fetch.warn: 1s
+# index.search.slowlog.threshold.fetch.info: 800ms
+# index.search.slowlog.threshold.fetch.debug: 500ms
+# index.search.slowlog.threshold.fetch.trace: 200ms
 
-index.indexing.slowlog.threshold.index.warn: 10s
-index.indexing.slowlog.threshold.index.info: 5s
-index.indexing.slowlog.threshold.index.debug: 2s
-index.indexing.slowlog.threshold.index.trace: 500ms
+# index.indexing.slowlog.threshold.index.warn: 10s
+# index.indexing.slowlog.threshold.index.info: 5s
+# index.indexing.slowlog.threshold.index.debug: 3s
+# index.indexing.slowlog.threshold.index.trace: 2s
 
 ################################## GC Logging ################################
 
-monitor.jvm.gc.young.warn: 1000ms
-monitor.jvm.gc.young.info: 700ms
-monitor.jvm.gc.young.debug: 400ms
+# monitor.jvm.gc.young.warn: 1000ms
+# monitor.jvm.gc.young.info: 700ms
+# monitor.jvm.gc.young.debug: 400ms
 
-monitor.jvm.gc.old.warn: 10s
-monitor.jvm.gc.old.info: 5s
-monitor.jvm.gc.old.debug: 2s
+# monitor.jvm.gc.old.warn: 10s
+# monitor.jvm.gc.old.info: 5s
+# monitor.jvm.gc.old.debug: 2s
 
 ################################## Security ################################
 
@@ -384,11 +384,10 @@ script.groovy.sandbox.enabled: false
 action.disable_delete_all_indices: true
 
 # Allow field data caching for speeding up requests
-indices.fielddata.cache.size: 60%
-indices.fielddata.cache.expire: 25m
+# indices.fielddata.cache.size: 60%
 
 # Set filter heap to reasonable value
-indices.cache.filter.size: 40%
+# indices.cache.filter.size: 10%
 
 # Lock JVM's memory to disallow swapping, also check out /etc/sysctl.conf
 # for swappiness variable
@@ -402,5 +401,6 @@ node.local: true
 
 # Thread Pool settings for search
 threadpool.search.type: fixed
-threadpool.search.size: 30
+threadpool.search.size: 12
 threadpool.search.queue_size: 1000
+processors: 6
