@@ -401,6 +401,6 @@ node.local: true
 
 # Thread Pool settings for search
 threadpool.search.type: fixed
-threadpool.search.size: 12
-threadpool.search.queue_size: 1000
-processors: 6
+threadpool.search.size: 5
+threadpool.search.queue_size: 100
+processors: 5
