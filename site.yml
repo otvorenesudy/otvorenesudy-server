@@ -57,6 +57,7 @@
     - { role: passenger-nginx, tags: nginx }
     - { role: elasticsearch, version: 1.7.6, tags: elasticsearch }
     - { role: redis, tags: redis }
+    - { role: python, tags: python }
     - { role: memcached, tags: memcached }
     - { role: letsencrypt, tags: [letsencrypt] }
     - { role: apps, tags: apps }

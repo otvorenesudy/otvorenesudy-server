@@ -1,0 +1,4 @@
+- name: Install Python libraries
+  shell: |
+    pip3 install psycopg2 sentence-transformers torch transformers pandas scikit-learn numpy tenacity
+  
