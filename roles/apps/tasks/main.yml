@@ -13,7 +13,7 @@
 - name: Run elasticsearch-check script
   cron:
     name: "Run elasticsearch-check check"
-    minute: "*/10"
+    minute: "*/2"
     job: /bin/bash /root/elasticsearch-check.sh 2>> /root/elasticsearch-check.log
 
 # - name: Copy workers restart script
